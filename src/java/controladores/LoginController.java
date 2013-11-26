@@ -6,7 +6,7 @@ package controladores;
 
 /**
  *
- * @author henry velasquez
+ * @author henry
  */
 import DAO.UsuarioDAO;
 import java.awt.event.ActionEvent;
