@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+     <script type="text/javascript">
+      function signinCallback(authResult) {
+  if (authResult['access_token']) {
+    // Update the app to reflect a signed in user
+    // Hide the sign-in button now that the user is authorized, for example:
+    document.getElementById('signinButton').setAttribute('style', 'display: none');
+  } else if (authResult['error']) {
+    // Update the app to reflect a signed out user
+    // Possible error values:
+    //   "user_signed_out" - User is signed-out
+    //   "access_denied" - User denied access to your app
+    //   "immediate_failed" - Could not automatically log in the user
+    console.log('Sign-in state: ' + authResult['error']);
+  }
+}
+
+function cerrar() {
+  gapi.auth.signOut();
+}
+    </script>
+    <h:body>
+<!-- Place this asynchronous JavaScript just before your </body> tag -->
+    <script type="text/javascript">
+      (function() {
+       var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+       po.src = 'https://apis.google.com/js/client:plusone.js';
+       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+     })();
+    </script>
+        <h2>h:inputText example</h2>
+   <hr />
+   <h:form>
+      <h3>Read-Only input text box</h3>
+      <h:inputText value="Hello World!" readonly="true"/>
+      <h3>Read-Only input text box</h3>
+      <h:inputText value="Hello World"/>
+   </h:form>
+    
+    <span id="signinButton">
+  <span
+    class="g-signin"
+    data-callback="signinCallback"
+    data-clientid="264370562094.apps.googleusercontent.com"
+    data-cookiepolicy="single_host_origin"
+    data-requestvisibleactions="http://schemas.google.com/AddActivity"
+    data-scope="https://www.googleapis.com/auth/plus.login">
+  </span>
+</span>
+   
+   <a href="index.xhtml" onclick="javascript:cerrar()"> signOut</a>
+ 
+   <h2>Implicit Navigation</h2>
+      <hr />
+      <h:form>
+         <h3>Using Managed Bean</h3>
+         <h:commandButton action="#{navigationController.moveToPage1}"
+            value="Page1" />
+         <h3>Using JSF outcome</h3>
+         <h:commandButton action="page2" value="Page2" />
+      </h:form>
+      <br/>
+      <h2>Conditional Navigation</h2>
+      <hr />
+      <h:form>
+         <h:commandLink action="#{navigationController.showPage}"
+            value="Page1">
+            <f:param name="pageId" value="1" />
+         </h:commandLink>
+              
+         <h:commandLink action="#{navigationController.showPage}"
+            value="Page2">
+            <f:param name="pageId" value="2" />
+         </h:commandLink>
+              
+         <h:commandLink action="#{navigationController.showPage}"
+            value="Home">
+            <f:param name="pageId" value="3" />
+         </h:commandLink>
+      </h:form>
+      <br/>
+      <h2>"From Action" Navigation</h2>
+      <hr />
+      <h:form>
+         <h:commandLink action="#{navigationController.processPage1}"
+         value="Page1" />
+              
+         <h:commandLink action="#{navigationController.processPage2}"
+         value="Page2" />
+              
+      </h:form>
+      <br/>
+      <h2>Forward vs Redirection Navigation</h2>
+      <hr />
+      <h:form>
+         <h3>Forward</h3>
+         <h:commandButton action="page1" value="Page1" />
+         <h3>Redirect</h3>
+         <h:commandButton action="page1?faces-redirect=true"
+         value="Page1" />
+      </h:form>
+    </h:body>
+    
+</html>
+

@@ -1,0 +1,170 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <script src="https://apis.google.com/js/client.js"></script>
+    <script type="text/javascript">
+             
+function cerrar() {
+  gapi.auth.signOut();
+}
+
+function redireccionar() 
+{
+location.href="principal.xhtml";
+} 
+     
+function loginFinishedCallback(authResult) {
+    if (authResult) {
+      if (authResult['error'] == undefined){
+        gapi.auth.setToken(authResult); // Store the returned token.
+        toggleElement('signin-button'); // Hide the sign-in button after successfully signing in the user.
+       document.getElementById('signin-button').setAttribute('style', 'display: none');
+       // redireccionar();
+        getEmail();                     // Trigger request to get the email address.
+      } else {
+        console.log('An error occurred');
+      }
+    } else {
+      console.log('Empty authResult');  // Something went wrong
+    }
+  }
+
+  /*
+   * Initiates the request to the userinfo endpoint to get the user's email
+   * address. This function relies on the gapi.auth.setToken containing a valid
+   * OAuth access token.
+   *
+   * When the request completes, the getEmailCallback is triggered and passed
+   * the result of the request.
+   */
+  function getEmail(){
+    // Load the oauth2 libraries to enable the userinfo methods.
+    gapi.client.load('oauth2', 'v2', function() {
+          var request = gapi.client.oauth2.userinfo.get();
+          request.execute(getEmailCallback);
+        });
+  }
+
+  function getEmailCallback(obj){
+    var el = document.getElementById('name');
+    var email = '';
+    var logro = '';
+    var nombre = '';
+
+    if (obj['email']) {
+      email = obj['email'];
+      nombre = obj['name'];
+    }
+    
+   // name, public profile URL, and photo
+//View your gender
+//View your country, language, and timezone
+
+    //console.log(obj);   // Uncomment to inspect the full object.
+
+    el.innerHTML = logro;
+    toggleElement('name');
+    document.getElementById('registro:nombre').value = nombre;
+    document.getElementById('registro:email').value = email;
+  }
+
+  function toggleElement(id) {
+    var el = document.getElementById(id);
+    if (el.getAttribute('class') == 'hide') {
+      el.setAttribute('class', 'show');
+    } else {
+      el.setAttribute('class', 'hide');
+    }
+  }
+     </script>
+    <h:body>
+<!-- Place this asynchronous JavaScript just before your </body> tag -->
+    <script type="text/javascript">
+      (function() {
+       var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+       po.src = 'https://apis.google.com/js/client:plusone.js';
+       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+     })();
+    </script>
+
+    <h2 style=" padding:0 0 0 35%; color: white;">Bienvenido a Multimageface</h2>
+        
+   <hr />
+   
+   <h:panelGrid columns="3">
+       <h:form id="login" style="background: #231A6A">
+           <h3 style="color: black">Usuario:</h3>
+       <h:inputText id="usuario" size="30" value="#{loginController.usuario}"/>
+      <h3>Clave:</h3>
+      <h:inputSecret size="30" value="#{loginController.clave}"/>
+      <br/>
+      <h:commandButton action="#{loginController.login}" value="INICIAR SESION" style="border: 0px; background: cornflowerblue"/>
+      <f:param name="usuario" value="PRINCIPIANTE"/>
+
+   <br/>
+   <h:outputText value="#{loginController.mensaje}"/>
+  
+   
+     <h3>----- O -----</h3>
+   
+    <div id="signin-button" class="show">
+     <div class="g-signin" data-callback="loginFinishedCallback"
+      data-approvalprompt="force"
+      data-clientid="264370562094.apps.googleusercontent.com"
+      data-scope="https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+      data-height="short"
+      data-cookiepolicy="single_host_origin"
+      >
+    </div>
+    <!-- In most cases, you don't want to use approvalprompt=force. Specified
+    here to facilitate the demo.-->
+     </div> 
+     
+   <hr />
+     <h:link onclick="javascript:cerrar()">sign out google</h:link>
+    </h:form>
+       <h:form style=" width: 300px">
+       </h:form>
+   <h:form id="registro" style="background: #231A6A">
+            <h:panelGrid columns="2">
+            <h3>Nombre y Apellido:</h3>
+            <h:inputText id="nombre" size="20" value="#{loginController.nombreapellido}"/>
+            <h3>Usuario:</h3>
+            <h:inputText id="usuario" size="20" value="#{loginController.usuario}"/>
+            <h3>Clave:</h3>
+            <h:inputSecret size="20" value="#{loginController.clave}"/>
+            <h3>correo electronico:</h3>
+            <h:inputText id="email" size="20" value="#{loginController.email}"/>
+            <h:outputText value=""></h:outputText>
+            <h:outputText value=""></h:outputText>
+            <h:outputText value=""></h:outputText>
+            <h:outputText value=""></h:outputText>
+            <h:commandButton action="#{loginController.registrar}" value="REGISTRAR" style="border: 0px; background: cornflowerblue"/>
+      
+            <br/>
+            <h:outputText value="#{loginController.mensaje2}"/>
+            </h:panelGrid>
+        </h:form>
+</h:panelGrid>
+   
+   <img src="Face.png" width="87" height="87" alt="logoface" />
+   <img src="Twitter.png" width="90" height="90" alt="logotwiter" />
+   <img src="insta.png" width="85" height="85" alt="logoinsta" />
+   <img src="soundcloud.png" width="180" height="90" alt="logosoundcloud" />
+ <style>body{background-image:url("http://www.subeimagenes.com/img/fondo-web-5348s-116457.jpg");}</style>
+  
+ <div id="name" class="hide" ></div>
+    </h:body>
+    
+    
+    
+    
+   
+    
+</html>
+

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <head>
+        <title>Actualizacion Perfil</title>
+    </head>
+    <h:body>
+       <h2 style=" padding:0 0 0 35%; color: white;">Configuracion del Perfil</h2>
+      <h:panelGrid columns="3">
+          
+       <img src="images/usuario.png" width="100" height="100" alt="usuario" />
+      
+       <h:form style=" width: 300px">
+       </h:form>
+   <h:form style="background: #231A6A">
+            <h:panelGrid columns="2">
+            <h3>Nombre y Apellido:</h3>
+            <h:inputText size="20" value="#{loginController.nombreapellido}"/>
+            <h3>Usuario:</h3>
+            <h:inputText size="20" value="#{loginController.usuario}"/>
+            <h3>Clave:</h3>
+            <h:inputText size="20" value="#{loginController.clave}"/>
+            <h3>correo electronico:</h3>
+            <h:inputText size="20" value="#{loginController.email}"/>
+            <h3>Direccion:</h3>
+            <h:inputText size="20" value="#{loginController.direccion}"/>
+            <h3>Cuenta facebook:</h3>
+            <h:inputText size="20" value="#{loginController.facebook}"/>
+            <h3>Cuenta Twitter:</h3>
+            <h:inputText size="20" value="#{loginController.twitter}"/>
+            <h3>Cuenta google:</h3>
+            <h:inputText size="20" value="#{loginController.google}"/>
+            <h3>Privacidad (publica o privada):</h3>
+            <h:inputText size="20" value="#{loginController.privacidad}"/>
+            <h:outputText value=""></h:outputText>
+            <h:outputText value=""></h:outputText>
+            <h:outputText value=""></h:outputText>
+            <h:outputText value=""></h:outputText>
+            <h:commandButton action="#{loginController.Actualizar}" value="Actualizar" style="border: 0px; background: cornflowerblue"/>
+      
+            <br/>
+            <h:outputText value="#{loginController.mensaje2}"/>
+            </h:panelGrid>
+        </h:form>
+       </h:panelGrid>
+    </h:body>
+     <style>body{background-image:url("http://www.subeimagenes.com/img/fondo-web-5348s-116457.jpg");}</style>
+</html>
