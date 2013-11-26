@@ -5,39 +5,75 @@ and open the template in the editor.
 -->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <head>
         <title>Actualizacion Perfil</title>
+        <link rel="stylesheet" type="text/css" href="bootstrap.css" media="screen" />
     </head>
-    <h:body>
-       <h2 style=" padding:0 0 0 35%; color: white;">Configuracion del Perfil</h2>
-      <h:panelGrid columns="3">
-          
-       <img src="images/usuario.png" width="100" height="100" alt="usuario" />
+    <body>
       
-       <h:form style=" width: 300px">
-       </h:form>
-   <h:form style="background: #231A6A">
-            <h:panelGrid columns="2">
+        
+        <div class="navbar navbar-inverse" style="position:fixed;top:0;">
+  <ul class="nav navbar-nav" style="position:fixed;top:0;">
+<li><h4 style="color:#e67e22;">Face+</h4></li>
+ <li><a href="principal.xhtml">Principal</a></li>
+<li><a href="#">Inicio</a></li>
+<li><a href="#">Perfil</a></li>
+<li><a href="ActualizarUsuario.xhtml">Configuracion Perfil</a></li>
+<li><input style="position:relative;top:4px" type="text" placeholder="Buscar Amigos" class="form-control" /></li>
+<li><button style="position:relative;top:4px;height:36px;" class="tn btn-hg btn-primary">
+  Buscar
+</button></li>
+<li><h:form><h:commandButton 
+         style="position:relative;top:4px; left:400px;height:36px;" class="btn btn-danger"  value="Logout" action="#{loginController.logout}"/></h:form></li>
+  </ul>
+</div>
+        
+        <h2 style="h2">Configuracion del Perfil</h2>
+      
+          
+        <table> 
+            <td style="background-color:#bdc3c7; width: 300px;heigth:800px;" class="demo-sidebar ">
+                    <img style="position:relative;top:2px; left:60px;" src="images/user.png" width="180" height="180" alt="Usuariopic"  />
+       
+        
+       
+        <h2 class="h3">Hola tus datos son:</h2>
+
+<ul>
+    <li> <h:outputText value="#{loginController.usuario}"/></li>
+        <li>  <h:outputText value="#{loginController.email}"/></li>
+            <li> <h:outputText value="#{loginController.direccion}"/></li>
+                <li><h:outputText value="#{loginController.facebook}"/></li>
+                <li><h:outputText value="#{loginController.google}"/></li> 
+                <li><h:outputText value="#{loginController.twitter}"/></li>
+</ul>
+            </td>
+            <td style="width: 600px;position:absolute;top:70px;left:310px">
+   <h:form style="background:#e67e22;border-radius: 15px 15px 15px 15px;opacity: 0.9; width:600px; position:absolute; left:200px; ">
+            <h:panelGrid columns="2" style="margin:20px;">
             <h3>Nombre y Apellido:</h3>
-            <h:inputText size="20" value="#{loginController.nombreapellido}"/>
+            <h:inputText size="20" value="#{loginController.usuario}" class="form-control"/>
             <h3>Usuario:</h3>
-            <h:inputText size="20" value="#{loginController.usuario}"/>
+            <h:inputText size="20" value="#{loginController.nick}" class="form-control"/>
             <h3>Clave:</h3>
-            <h:inputText size="20" value="#{loginController.clave}"/>
+            <h:inputText size="20" value="#{loginController.clave}" class="form-control"/>
             <h3>correo electronico:</h3>
-            <h:inputText size="20" value="#{loginController.email}"/>
+            <h:inputText size="20" value="#{loginController.email}" class="form-control"/>
             <h3>Direccion:</h3>
-            <h:inputText size="20" value="#{loginController.direccion}"/>
+            <h:inputText size="20" value="#{loginController.direccion}" class="form-control"/>
             <h3>Cuenta facebook:</h3>
-            <h:inputText size="20" value="#{loginController.facebook}"/>
+            <h:inputText size="20" value="#{loginController.facebook}" class="form-control"/>
             <h3>Cuenta Twitter:</h3>
-            <h:inputText size="20" value="#{loginController.twitter}"/>
+            <h:inputText size="20" value="#{loginController.twitter}" class="form-control"/>
             <h3>Cuenta google:</h3>
-            <h:inputText size="20" value="#{loginController.google}"/>
-            <h3>Privacidad (publica o privada):</h3>
-            <h:inputText size="20" value="#{loginController.privacidad}"/>
+            <h:inputText size="20" value="#{loginController.google}" class="form-control"/>
+            <h3>Privacidad:</h3>
+            <h:selectOneRadio  value="#{loginController.privacidad}">
+   <f:selectItem itemValue="publica" itemLabel="Publica" />
+   <f:selectItem itemValue="privada" itemLabel="Privada" />	   							
+            </h:selectOneRadio>	
             <h:outputText value=""></h:outputText>
             <h:outputText value=""></h:outputText>
             <h:outputText value=""></h:outputText>
@@ -47,8 +83,12 @@ and open the template in the editor.
             <br/>
             <h:outputText value="#{loginController.mensaje2}"/>
             </h:panelGrid>
+     
         </h:form>
-       </h:panelGrid>
-    </h:body>
-     <style>body{background-image:url("http://www.subeimagenes.com/img/fondo-web-5348s-116457.jpg");}</style>
+ 
+            </td>
+       </table>  
+    </body>
+    <!-- <style>body{background-image:url("images/fondo2.png");}</style> -->
+    
 </html>

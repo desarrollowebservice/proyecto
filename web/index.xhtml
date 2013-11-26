@@ -4,9 +4,9 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Multimageface</title>
     </h:head>
-    <script src="https://apis.google.com/js/client.js"></script>
+     <script src="https://apis.google.com/js/client.js"></script>
     <script type="text/javascript">
              
 function cerrar() {
@@ -91,28 +91,30 @@ function loginFinishedCallback(authResult) {
        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
      })();
     </script>
-
-    <h2 style=" padding:0 0 0 35%; color: white;">Bienvenido a Multimageface</h2>
-        
-   <hr />
+ <img style="position:absolute;top: -5px;left: 400px;" src="images/face.png"  alt="tituloface" />
    
-   <h:panelGrid columns="3">
-       <h:form id="login" style="background: #231A6A">
+        
+
+   
+   <h:panelGrid columns="1">
+       <h:form style="background: #e67e22; width: 260px;height:400px;position:absolute;
+		top: 120px;
+		left: 140px;padding:0 0 0 7%;border-radius: 15px 15px 15px 15px; opacity: 0.9; ">
            <h3 style="color: black">Usuario:</h3>
-       <h:inputText id="usuario" size="30" value="#{loginController.usuario}"/>
+       <h:inputText size="15" value="#{loginController.usuario}" class="form-control"/>
       <h3>Clave:</h3>
-      <h:inputSecret size="30" value="#{loginController.clave}"/>
+      <h:inputSecret size="15" value="#{loginController.clave}" class="form-control"/>
       <br/>
-      <h:commandButton action="#{loginController.login}" value="INICIAR SESION" style="border: 0px; background: cornflowerblue"/>
+      <h:commandButton action="#{loginController.login}" value="INICIAR SESION" style="border: 0px; background: cornflowerblue "/>
       <f:param name="usuario" value="PRINCIPIANTE"/>
 
    <br/>
    <h:outputText value="#{loginController.mensaje}"/>
   
    
-     <h3>----- O -----</h3>
+    
    
-    <div id="signin-button" class="show">
+   <div id="signin-button" class="show">
      <div class="g-signin" data-callback="loginFinishedCallback"
       data-approvalprompt="force"
       data-clientid="264370562094.apps.googleusercontent.com"
@@ -124,22 +126,22 @@ function loginFinishedCallback(authResult) {
     <!-- In most cases, you don't want to use approvalprompt=force. Specified
     here to facilitate the demo.-->
      </div> 
-     
-   <hr />
-     <h:link onclick="javascript:cerrar()">sign out google</h:link>
+  
     </h:form>
-       <h:form style=" width: 300px">
+       <h:form style=" width: 300px;">
        </h:form>
-   <h:form id="registro" style="background: #231A6A">
-            <h:panelGrid columns="2">
+   <h:form style="background: #e67e22; width: 300px;position:absolute;
+		top: 120px;
+		left: 630px;padding:0 0 0 7%;border-radius: 15px 15px 15px 15px;opacity: 0.9; ">
+            <h:panelGrid columns="1">
             <h3>Nombre y Apellido:</h3>
-            <h:inputText id="nombre" size="20" value="#{loginController.nombreapellido}"/>
+            <h:inputText size="15" value="#{loginController.nombreapellido}" class="form-control"/>
             <h3>Usuario:</h3>
-            <h:inputText id="usuario" size="20" value="#{loginController.usuario}"/>
+            <h:inputText size="15" value="#{loginController.nick}" class="form-control"/>
             <h3>Clave:</h3>
-            <h:inputSecret size="20" value="#{loginController.clave}"/>
+            <h:inputSecret size="15" value="#{loginController.clave}" class="form-control"/>
             <h3>correo electronico:</h3>
-            <h:inputText id="email" size="20" value="#{loginController.email}"/>
+            <h:inputText size="15" value="#{loginController.email}" class="form-control"/>
             <h:outputText value=""></h:outputText>
             <h:outputText value=""></h:outputText>
             <h:outputText value=""></h:outputText>
@@ -152,17 +154,13 @@ function loginFinishedCallback(authResult) {
         </h:form>
 </h:panelGrid>
    
-   <img src="Face.png" width="87" height="87" alt="logoface" />
-   <img src="Twitter.png" width="90" height="90" alt="logotwiter" />
-   <img src="insta.png" width="85" height="85" alt="logoinsta" />
-   <img src="soundcloud.png" width="180" height="90" alt="logosoundcloud" />
- <style>body{background-image:url("http://www.subeimagenes.com/img/fondo-web-5348s-116457.jpg");}</style>
-  
- <div id="name" class="hide" ></div>
+   <img style="position:absolute;top: 600px;left: 580px;" src="images/Face.png" width="87" height="87" alt="logoface" />
+   <img style="position:absolute;top: 600px;left: 680px;" src="images/Twitter.png" width="90" height="90" alt="logotwiter" />
+   <img style="position:absolute;top: 600px;left: 780px;" src="images/insta.png" width="85" height="85" alt="logoinsta" />
+   <img style="position:absolute;top: 600px;left: 880px;" src="images/soundcloud.png" width="180" height="90" alt="logosoundcloud" />
+ 
+  <div id="name" class="hide" ></div>
     </h:body>
-    
-    
-    
     
    
     

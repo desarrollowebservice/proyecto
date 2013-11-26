@@ -6,7 +6,7 @@ package controladores;
 
 /**
  *
- * @author henry jorge arbelo
+ * @author henry
  */
 import DAO.UsuarioDAO;
 import java.awt.event.ActionEvent;
@@ -33,9 +33,9 @@ public class LoginController {
     private String twitter;
     private String google;
     private String direccion;
+    private String nick;
     private String privacidad;
-    private int id;
-
+    private int    id;
     public LoginController() {
         this.usuario = "";
         this.clave = "";
@@ -47,29 +47,32 @@ public class LoginController {
         this.twitter = "";
         this.google = "";
         this.direccion = "";
-        this.privacidad = "";
-        this.id = 0;
-
+        this.nick="";
+        this.privacidad="";
+        this.id=0;
+        
     }
+
 
     public String login() {
         // some validations may be done here...
 
-        UsuarioDAO userDao = new UsuarioDAO();
+        UsuarioDAO userDao = new UsuarioDAO(); 
         Usuario user = new Usuario();
-        if (userDao.ValidarUsuario(usuario, clave)) {
+        if (userDao.ValidarUsuario (usuario,clave)) {     
             UsuarioDAO buscaruser = new UsuarioDAO();
             user = buscaruser.conseguirUsuario(usuario, clave);
-            id = user.getIdUsuario();
-            usuario = user.getUsuario();
+            id=user.getIdUsuario();
+            usuario = user.getNombre();
             nombreapellido = user.getNombre();
             email = user.getEmail();
             direccion = user.getDireccion();
             facebook = user.getFacebook();
             twitter = user.getTwittter();
             google = user.getGoogle();
-            clave = user.getPassword();
-            privacidad = user.getPrivacidad();
+            nick =user.getUsuario();
+            clave =user.getPassword();
+            privacidad=user.getPrivacidad();
             return "principal?faces-redirect=true";
         } else {
             mensaje = "Usuario o clave incorrecta";
@@ -77,61 +80,79 @@ public class LoginController {
             return "index";
         }
     }
-
+    
     public String logout() {
         // some validations may be done here...
-        id = 0;
-        direccion = null;
-        facebook = null;
-        twitter = null;
-        google = null;
-        clave = null;
-        privacidad = null;
-        usuario = null;
+
         mensaje = null;
         mensaje2 = null;
         nombreapellido = null;
         email = null;
+        this.usuario = "";
+        this.clave = "";
+        this.mensaje = "";
+        this.mensaje2 = "";
+        this.nombreapellido = "";
+        this.email = "";
+        this.facebook = "";
+        this.twitter = "";
+        this.google = "";
+        this.direccion = "";
+        this.nick="";
+        this.privacidad="";
+        this.id=0;
         return "index?faces-redirect=true";
     }
+    
+     public boolean isLoggedIn() {
 
-    public boolean isLoggedIn() {
-
-        return usuario != null;
+       return usuario!=null;
 
     }
-
-    public String Actualizar() {
+  
+     
+     public String Actualizar() {
         // some validations may be done here...
 
-        if ((nombreapellido.equals(""))) {
-            mensaje = "";
-            mensaje2 = "nombre obligatorio";
-            return "index";
-        } else {
+        
             if (usuario.equals("")) {
                 mensaje = "";
-                mensaje2 = "Usuario obligatorio";
-                return "index";
+                mensaje2 = "Nombre obligatorio";
+                return "principal?faces-redirect=true";
             } else {
                 if (clave.equals("")) {
                     mensaje = "";
                     mensaje2 = "clave obligatorio";
-                    return "index";
+                    return "principal?faces-redirect=true";
                 } else {
                     if (email.equals("")) {
                         mensaje = "";
                         mensaje2 = "email obligatorio";
-                        return "index";
+                        return "principal?faces-redirect=true";
                     } else {
-                        boolean Actualizado = false;
+                        if (nick.equals("")) {
                         mensaje = "";
-                        mensaje2 = "actualizado";
+                        mensaje2 = "Usuario obligatorio";
+                        return "principal?faces-redirect=true";
+                    } else {                       
+                        if (privacidad.equals("")) {
+                        mensaje = "";
+                        mensaje2 = "privacidad obligatorio";
+                        return "principal?faces-redirect=true";
+                    } else {
+                        if (clave.equals("")) {
+                        mensaje = "";
+                        mensaje2 = "clave obligatoria";
+                        return "principal?faces-redirect=true";
+                    } else {
+                         boolean Actualizado =false;
+                        mensaje = "";
+                        mensaje2 = "registrado";
                         Usuario user = new Usuario();
                         UsuarioDAO Actusuario = new UsuarioDAO();
                         user.setIdUsuario(id);
-                        user.setNombre(nombreapellido);
-                        user.setUsuario(usuario);
+                        user.setNombre(usuario);
+                        user.setUsuario(nick);
                         user.setPassword(clave);
                         user.setEmail(email);
                         user.setDireccion(direccion);
@@ -140,22 +161,29 @@ public class LoginController {
                         user.setGoogle(google);
                         user.setPrivacidad(privacidad);
                         Actualizado = Actusuario.ActualizarUsuario(user);
-                        if (Actualizado) {
+                        if (Actualizado){
                             return "principal?faces-redirect=true";
-                        } else {
+                        }else {
                             mensaje2 = "no se logro actualizar el usuario";
-                            return "ActualizarUsuario";
+                            return "index?faces-redirect=true";
                         }
-                    }
-
+                        }
+                        }
+                        
+                        
+                      
+                       
+                    } 
+                    
                 }
             }
         }
 
-        
-
 
     }
+    
+     
+     
 
     public String registrar() {
         // some validations may be done here...
@@ -165,7 +193,7 @@ public class LoginController {
             mensaje2 = "nombre obligatorio";
             return "index";
         } else {
-            if (usuario.equals("")) {
+            if (nick.equals("")) {
                 mensaje = "";
                 mensaje2 = "Usuario obligatorio";
                 return "index";
@@ -180,55 +208,68 @@ public class LoginController {
                         mensaje2 = "email obligatorio";
                         return "index";
                     } else {
-                        boolean registrado = false;
+                        boolean registrado=false;
                         mensaje = "";
                         mensaje2 = "registrado";
                         Usuario user = new Usuario();
                         UsuarioDAO addusuario = new UsuarioDAO();
-
+                        
                         user.setNombre(nombreapellido);
-                        user.setUsuario(usuario);
+                        user.setUsuario(nick);
                         user.setPassword(clave);
                         user.setEmail(email);
                         registrado = addusuario.agregarUsuario(user);
-                        if (registrado) {
+                        if (registrado){
                             return "principal?faces-redirect=true";
-                        } else {
+                        }else {
                             mensaje2 = "no se logro registrar el usuario";
                             return "index?faces-redirect=true";
                         }
-                    }
-
+                    } 
+                    
                 }
             }
         }
 
 
     }
-
-    public void pullValuesFromFlash(ComponentSystemEvent e) {
-        Flash flash = FacesContext.getCurrentInstance().
-                getExternalContext().getFlash();
-        usuario = (String) flash.get("usuario");
-
-    }
-
-    public int getId() {
+    
+    public void pullValuesFromFlash(ComponentSystemEvent e) {  
+           Flash flash = FacesContext.getCurrentInstance().  
+                               getExternalContext().getFlash();  
+           usuario = (String)flash.get("usuario");  
+          
+      } 
+        public int getId() {
         return id;
     }
 
     public void setPrivacidad(int id) {
         this.id = id;
     }
-
-    public String getPrivacidad() {
+    
+    
+    
+    
+    
+      public String getPrivacidad() {
         return privacidad;
     }
 
     public void setPrivacidad(String privacidad) {
         this.privacidad = privacidad;
     }
+    
+    
+     public String getNick() {
+        return nick;
+    }
 
+    public void setNick(String nick) {
+        this.nick = nick;
+    }
+    
+    
     public String getDireccion() {
         return direccion;
     }
@@ -236,7 +277,6 @@ public class LoginController {
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
-
     public String getUsuario() {
         return usuario;
     }
@@ -268,7 +308,8 @@ public class LoginController {
     public void setNombreapellido(String nombreapellido) {
         this.nombreapellido = nombreapellido;
     }
-
+    
+ 
     public String getEmail() {
         return email;
     }
@@ -308,4 +349,6 @@ public class LoginController {
     public void setMensaje2(String mensaje2) {
         this.mensaje2 = mensaje2;
     }
+    
+    
 }

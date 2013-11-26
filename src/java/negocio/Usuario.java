@@ -13,7 +13,6 @@ public class Usuario {
     private String usuario;
     private String password;
     private String Nombre;
-    private String apellido;
     private String direccion;
     private String email;
     private String facebook;
@@ -26,7 +25,6 @@ public class Usuario {
         this.usuario = "";
         this.password = "";
         this.Nombre = "";
-        this.apellido = "";
         this.direccion = "";
         this.email = "";
         this.facebook = "";
@@ -40,7 +38,6 @@ public class Usuario {
         this.usuario = usuario;
         this.password = password;
         this.Nombre = Nombre;
-        this.apellido = apellido;
         this.direccion = direccion;
         this.email = email;
         this.facebook = facebook;
@@ -83,13 +80,7 @@ public class Usuario {
         this.Nombre = Nombre;
     }
 
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
+  
 
     public String getDireccion() {
         return direccion;
