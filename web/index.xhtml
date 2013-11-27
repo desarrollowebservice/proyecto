@@ -130,18 +130,18 @@ function loginFinishedCallback(authResult) {
     </h:form>
        <h:form style=" width: 300px;">
        </h:form>
-   <h:form style="background: #e67e22; width: 300px;position:absolute;
+       <h:form id="registro" style="background: #e67e22; width: 300px;position:absolute;
 		top: 120px;
 		left: 630px;padding:0 0 0 7%;border-radius: 15px 15px 15px 15px;opacity: 0.9; ">
             <h:panelGrid columns="1">
             <h3>Nombre y Apellido:</h3>
-            <h:inputText size="15" value="#{loginController.nombreapellido}" class="form-control"/>
+            <h:inputText id="nombre" size="15" value="#{loginController.nombreapellido}" class="form-control"/>
             <h3>Usuario:</h3>
             <h:inputText size="15" value="#{loginController.nick}" class="form-control"/>
             <h3>Clave:</h3>
             <h:inputSecret size="15" value="#{loginController.clave}" class="form-control"/>
             <h3>correo electronico:</h3>
-            <h:inputText size="15" value="#{loginController.email}" class="form-control"/>
+            <h:inputText id="email" size="15" value="#{loginController.email}" class="form-control"/>
             <h:outputText value=""></h:outputText>
             <h:outputText value=""></h:outputText>
             <h:outputText value=""></h:outputText>

@@ -19,7 +19,7 @@ import javax.faces.context.Flash;
 import javax.faces.event.ComponentSystemEvent;
 import negocio.Usuario;
 
-@ManagedBean(name = "navegationController", eager = true)
+@ManagedBean(name = "loginController", eager = true)
 @RequestScoped
 public class LoginController {
 
@@ -36,6 +36,7 @@ public class LoginController {
     private String nick;
     private String privacidad;
     private int    id;
+    
     public LoginController() {
         this.usuario = "";
         this.clave = "";
@@ -83,11 +84,6 @@ public class LoginController {
     
     public String logout() {
         // some validations may be done here...
-
-        mensaje = null;
-        mensaje2 = null;
-        nombreapellido = null;
-        email = null;
         this.usuario = "";
         this.clave = "";
         this.mensaje = "";
