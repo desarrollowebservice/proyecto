@@ -1,114 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
-<head>
-<title>MULTIMAGEFACE</title>
-<meta http-equiv="Content-Language" content="English" />
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet" type="text/css" href="bootstrap.css" media="screen" />
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <head>
+        <title>MULTIMAGEFACE</title>
+        <meta http-equiv="Content-Language" content="English" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" type="text/css" href="bootstrap.css" media="screen" />
 
-</head>
-<body>
+    </head>
+    <h:body>
 
-<div id="wrap">
+        <div id="wrap">
 
 
-<div class="navbar navbar-inverse">
-  <ul class="nav navbar-nav">
-<li><h4 style="color:#e67e22;">Face+</h4></li>
- <li><a href="#">Principal</a></li>
-<li><a href="#">Inicio</a></li>
-<li><a href="#">Perfil</a></li>
-<li><a href="ActualizarUsuario.xhtml">Configuracion Perfil</a></li>
-<li><input style="position:relative;top:4px" type="text" placeholder="Buscar Amigos" class="form-control" /></li>
-<li><button style="position:relative;top:4px;height:36px;" class="tn btn-hg btn-primary">
-  Buscar
-</button></li>
-<li><h:form><h:commandButton 
-            style="position:relative;top:4px; left:400px;height:36px;" class="btn btn-danger"  value="Logout" action="#{loginController.logout}"/></h:form></li>
-  </ul>
-</div>
+            <div class="navbar navbar-inverse">
+                <ul class="nav navbar-nav">
+                    <li><h4 style="color:#e67e22;">Face+</h4></li>
+                    <li><a href="#">Principal</a></li>
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#">Perfil</a></li>
+                    <li><a href="ActualizarUsuario.xhtml">Configuracion Perfil</a></li>
+                    <li><input style="position:relative;top:4px" type="text" placeholder="Buscar Amigos" class="form-control" /></li>
+                    <li><button style="position:relative;top:4px;height:36px;" class="tn btn-hg btn-primary">
+                            Buscar
+                        </button></li>
+                    <li><h:form><h:commandButton 
+                                style="position:relative;top:4px; left:400px;height:36px;" class="btn btn-danger"  value="Logout" action="#{loginController.logout}"/></h:form></li>
+                </ul>
+            </div>
 
-<h:outputText value="#{loginController.nick}"/>
+            <h:outputText value="#{loginController.nick}"/>
 
-<table style="position:absolute;top:52px;" >
-    <td style="background-color:#bdc3c7; width: 300px;heigth:800px;" class="demo-sidebar " >
-        <img style="position:relative;top:2px; left:60px;" src="images/user.png" width="180" height="180" alt="Usuariopic"  />
-       
-        
-       
-        <h2 class="h3">Hola tus datos son:</h2>
-
-<ul>
-    <li> <h:outputText value="#{loginController.usuario}"/></li>
-        <li>  <h:outputText value="#{loginController.email}"/></li>
-            <li> <h:outputText value="#{loginController.direccion}"/></li>
-                <li><h:outputText value="#{loginController.facebook}"/></li>
-                <li><h:outputText value="#{loginController.google}"/></li> 
-                <li><h:outputText value="#{loginController.twitter}"/></li>
-</ul>
-        
-              
-        
-        
-    </td>
-    <td style="width: 600px;position:absolute;top:52px;left:310px">
-         <h1 style="position:relative;top:10px; left:420px;height:36px;" class="h1">BIENVENIDO</h1>
-         <p class="h4">Hola, como estas ya es hora de compartir las mejores fotos las mejoras musica y de conocer 
-         a tus futuros y nuevos amigos que esperas para unirte a la mejor experiencias gracias a Mutimageface
-           </p>
-         <h2 class="h3">Hoy cumple años tus amigos:</h2>
-<ul>
-<li><a href="#">Henry calles</a></li> 
-<li><a href="#">Franklin Garcia</a></li> 
-<li><a href="#">Luis Medina</a></li> 
-<li><a href="#">Maria fernanda</a></li>
-</ul>
-<h2 style="color:#2980b9;">Conectate a tus apps favoritas y comparte un mundo!!<br/></h2>
-   <img src="images/Face.png" width="87" height="87" alt="logoface" />
-   <img src="images/Twitter.png" width="90" height="90" alt="logotwiter" />
-   <img src="images/insta.png" width="85" height="85" alt="logoinsta" />
-   <img src="images/soundcloud.png" width="180" height="90" alt="logosoundcloud" />
+            <table style="position:absolute;top:52px;" >
+                <td style="background-color:#bdc3c7; width: 300px;heigth:800px;" class="demo-sidebar " >
+                    <img style="position:relative;top:2px; left:60px;" src="images/user.png" width="180" height="180" alt="Usuariopic"  />
 
 
 
+                    <h2 class="h3">Hola tus datos son:</h2>
 
-       
-    </td>
-  
-</table>
+                    <h:form>
+                        <ul>
+                            <li><h:outputText value="#{loginController.nombreapellido}"/></li>
+                            <li><h:outputText value="#{loginController.email}"/>Email</li>
+                            <c:if test="${!empty loginController.direccion}">
+                                <li><h:outputText value="#{loginController.direccion}"/></li>
+                            </c:if>
+                            <c:if test="${!empty loginController.facebook}">
+                                <li><h:outputLink value="#{loginController.facebook}" target="_blank">FACEBOOK</h:outputLink></li>
+                            </c:if>
+                            <c:if test="${!empty loginController.google}">
+                                <li><h:outputLink value="#{loginController.google}" target="_blank">GOOGLE+</h:outputLink></li>
+                            </c:if>
+                            <c:if test="${!empty loginController.twitter}">
+                                <li><h:outputLink value="#{loginController.twitter}" target="_blank">TWITTER</h:outputLink></li>
+                            </c:if>
+                            
+                            
+                        </ul>
+                    </h:form>
 
-     
 
 
-
-
-
-
- <!--<img style="position:absolute; top: 120px; left: 630px;" src="images/usuario.png" width="100" height="100" alt="usuario" /><br />
--->
+                </td>
+                <td style="width: 600px;position:absolute;top:52px;left:310px">
+                    <h1 style="position:relative;top:10px; left:420px;height:36px;" class="h1">BIENVENIDO</h1>
+                    <p class="h4">Hola, como estas ya es hora de compartir las mejores fotos las mejoras musica y de conocer 
+                        a tus futuros y nuevos amigos que esperas para unirte a la mejor experiencias gracias a Mutimageface
+                    </p>
+                    <h2 class="h3">Hoy cumple años tus amigos:</h2>
+                    <ul>
+                        <li><a href="#">Henry calles</a></li> 
+                        <li><a href="#">Franklin Garcia</a></li> 
+                        <li><a href="#">Luis Medina</a></li> 
+                        <li><a href="#">Maria fernanda</a></li>
+                    </ul>
+                    <h2 style="color:#2980b9;">Conectate a tus apps favoritas y comparte un mundo!!<br/></h2>
+                    <img src="images/face.png" width="87" height="87" alt="logoface" />
+                    <img src="images/Twitter.png" width="90" height="90" alt="logotwiter" />
+                    <img src="images/insta.png" width="85" height="85" alt="logoinsta" />
+                    <img src="images/soundcloud.png" width="180" height="90" alt="logosoundcloud" />
 
 
 
 
 
+                </td>
+
+            </table>
 
 
 
-</div>
 
-</body>
+
+
+
+
+            <!--<img style="position:absolute; top: 120px; left: 630px;" src="images/usuario.png" width="100" height="100" alt="usuario" /><br />
+            -->
+
+
+
+
+
+
+
+
+        </div>
+
+    </h:body>
     <!-- <style>body{background-image:url("images/fondo2.png");}</style> -->
-    
+
 </html>
 
 
-    
-    
-    
+
+
+
 
 

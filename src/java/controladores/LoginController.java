@@ -64,7 +64,7 @@ public class LoginController {
             UsuarioDAO buscaruser = new UsuarioDAO();
             user = buscaruser.conseguirUsuario(usuario, clave);
             id=user.getIdUsuario();
-            usuario = user.getNombre();
+            usuario = user.getUsuario();
             nombreapellido = user.getNombre();
             email = user.getEmail();
             direccion = user.getDireccion();
@@ -147,7 +147,7 @@ public class LoginController {
                         Usuario user = new Usuario();
                         UsuarioDAO Actusuario = new UsuarioDAO();
                         user.setIdUsuario(id);
-                        user.setNombre(usuario);
+                        user.setNombre(nombreapellido);
                         user.setUsuario(nick);
                         user.setPassword(clave);
                         user.setEmail(email);

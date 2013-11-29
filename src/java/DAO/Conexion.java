@@ -29,6 +29,6 @@ public class Conexion {
     }   
     Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);   
     return conn;   
-   }  
-    
+   }
+
   }
