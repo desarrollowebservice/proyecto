@@ -6,12 +6,13 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
     <head>
         <title>Actualizacion Perfil</title>
         <link rel="stylesheet" type="text/css" href="bootstrap.css" media="screen" />
     </head>
-    <body>
+    <h:body>
       
         
         <div class="navbar navbar-inverse" style="position:fixed;top:0;">
@@ -34,22 +35,37 @@ and open the template in the editor.
       
           
         <table> 
-            <td style="background-color:#bdc3c7; width: 300px;heigth:800px;" class="demo-sidebar ">
+            <td style="background-color:#bdc3c7; width: 300px;heigth:800px;" class="demo-sidebar " >
                     <img style="position:relative;top:2px; left:60px;" src="images/user.png" width="180" height="180" alt="Usuariopic"  />
-       
-        
-       
-        <h2 class="h3">Hola tus datos son:</h2>
 
-<ul>
-    <li> <h:outputText value="#{loginController.usuario}"/></li>
-        <li>  <h:outputText value="#{loginController.email}"/></li>
-            <li> <h:outputText value="#{loginController.direccion}"/></li>
-                <li><h:outputText value="#{loginController.facebook}"/></li>
-                <li><h:outputText value="#{loginController.google}"/></li> 
-                <li><h:outputText value="#{loginController.twitter}"/></li>
-</ul>
-            </td>
+
+
+                    <h2 class="h3">Hola tus datos son:</h2>
+
+                    <h:form>
+                        <ul>
+                            <li><h:outputText value="#{loginController.nombreapellido}"/></li>
+                            <li><h:outputText value="#{loginController.email}"/>Email</li>
+                            <c:if test="${!empty loginController.direccion}">
+                                <li><h:outputText value="#{loginController.direccion}"/></li>
+                            </c:if>
+                            <c:if test="${!empty loginController.facebook}">
+                                <li><h:outputLink value="#{loginController.facebook}" target="_blank">FACEBOOK</h:outputLink></li>
+                            </c:if>
+                            <c:if test="${!empty loginController.google}">
+                                <li><h:outputLink value="#{loginController.google}" target="_blank">GOOGLE+</h:outputLink></li>
+                            </c:if>
+                            <c:if test="${!empty loginController.twitter}">
+                                <li><h:outputLink value="#{loginController.twitter}" target="_blank">TWITTER</h:outputLink></li>
+                            </c:if>
+                            
+                            
+                        </ul>
+                    </h:form>
+
+
+
+                </td>
             <td style="width: 600px;position:absolute;top:70px;left:310px">
    <h:form style="background:#e67e22;border-radius: 15px 15px 15px 15px;opacity: 0.9; width:600px; position:absolute; left:200px; ">
             <h:panelGrid columns="2" style="margin:20px;">
@@ -88,7 +104,7 @@ and open the template in the editor.
  
             </td>
        </table>  
-    </body>
+    </h:body>
     <!-- <style>body{background-image:url("images/fondo2.png");}</style> -->
     
 </html>
