@@ -8,15 +8,19 @@ package controladores;
  *
  * @author henry
  */
+import DAO.AlbumDAO;
 import DAO.UsuarioDAO;
 import java.awt.event.ActionEvent;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.faces.event.ComponentSystemEvent;
+import negocio.Album;
 import negocio.Usuario;
 
 @ManagedBean(name = "loginController", eager = true)
@@ -35,8 +39,10 @@ public class LoginController {
     private String direccion;
     private String nick;
     private String privacidad;
-    private int    id;
-    
+    private int id;
+    private List<Album> albumes;
+    private AlbumController albumcontroller;
+
     public LoginController() {
         this.usuario = "";
         this.clave = "";
@@ -48,22 +54,22 @@ public class LoginController {
         this.twitter = "";
         this.google = "";
         this.direccion = "";
-        this.nick="";
-        this.privacidad="";
-        this.id=0;
+        this.nick = "";
+        this.privacidad = "";
+        this.id = 0;
+        this.albumes = new ArrayList<Album>();
         
-    }
 
+    }
 
     public String login() {
         // some validations may be done here...
-
-        UsuarioDAO userDao = new UsuarioDAO(); 
+        UsuarioDAO userDao = new UsuarioDAO();
         Usuario user = new Usuario();
-        if (userDao.ValidarUsuario (usuario,clave)) {     
+        if (userDao.ValidarUsuario(usuario, clave)) {
             UsuarioDAO buscaruser = new UsuarioDAO();
             user = buscaruser.conseguirUsuario(usuario, clave);
-            id=user.getIdUsuario();
+            id = user.getIdUsuario();
             usuario = user.getUsuario();
             nombreapellido = user.getNombre();
             email = user.getEmail();
@@ -71,9 +77,9 @@ public class LoginController {
             facebook = user.getFacebook();
             twitter = user.getTwittter();
             google = user.getGoogle();
-            nick =user.getUsuario();
-            clave =user.getPassword();
-            privacidad=user.getPrivacidad();
+            nick = user.getUsuario();
+            clave = user.getPassword();
+            privacidad = user.getPrivacidad();
             return "principal?faces-redirect=true";
         } else {
             mensaje = "Usuario o clave incorrecta";
@@ -81,7 +87,7 @@ public class LoginController {
             return "index";
         }
     }
-    
+
     public String logout() {
         // some validations may be done here...
         this.usuario = "";
@@ -94,92 +100,88 @@ public class LoginController {
         this.twitter = "";
         this.google = "";
         this.direccion = "";
-        this.nick="";
-        this.privacidad="";
-        this.id=0;
+        this.nick = "";
+        this.privacidad = "";
+        this.id = 0;
         return "index?faces-redirect=true";
     }
-    
-     public boolean isLoggedIn() {
 
-       return usuario!=null;
+    public boolean isLoggedIn() {
+
+        return usuario != null;
 
     }
-  
-     
-     public String Actualizar() {
+
+    public String Actualizar() {
         // some validations may be done here...
 
-        
-            if (usuario.equals("")) {
+
+        if (usuario.equals("")) {
+            mensaje = "";
+            mensaje2 = "Nombre obligatorio";
+            return "principal?faces-redirect=true";
+        } else {
+            if (clave.equals("")) {
                 mensaje = "";
-                mensaje2 = "Nombre obligatorio";
+                mensaje2 = "clave obligatorio";
                 return "principal?faces-redirect=true";
             } else {
-                if (clave.equals("")) {
+                if (email.equals("")) {
                     mensaje = "";
-                    mensaje2 = "clave obligatorio";
+                    mensaje2 = "email obligatorio";
                     return "principal?faces-redirect=true";
                 } else {
-                    if (email.equals("")) {
-                        mensaje = "";
-                        mensaje2 = "email obligatorio";
-                        return "principal?faces-redirect=true";
-                    } else {
-                        if (nick.equals("")) {
+                    if (nick.equals("")) {
                         mensaje = "";
                         mensaje2 = "Usuario obligatorio";
                         return "principal?faces-redirect=true";
-                    } else {                       
+                    } else {
                         if (privacidad.equals("")) {
-                        mensaje = "";
-                        mensaje2 = "privacidad obligatorio";
-                        return "principal?faces-redirect=true";
-                    } else {
-                        if (clave.equals("")) {
-                        mensaje = "";
-                        mensaje2 = "clave obligatoria";
-                        return "principal?faces-redirect=true";
-                    } else {
-                         boolean Actualizado =false;
-                        mensaje = "";
-                        mensaje2 = "registrado";
-                        Usuario user = new Usuario();
-                        UsuarioDAO Actusuario = new UsuarioDAO();
-                        user.setIdUsuario(id);
-                        user.setNombre(nombreapellido);
-                        user.setUsuario(nick);
-                        user.setPassword(clave);
-                        user.setEmail(email);
-                        user.setDireccion(direccion);
-                        user.setFacebook(facebook);
-                        user.setTwittter(twitter);
-                        user.setGoogle(google);
-                        user.setPrivacidad(privacidad);
-                        Actualizado = Actusuario.ActualizarUsuario(user);
-                        if (Actualizado){
+                            mensaje = "";
+                            mensaje2 = "privacidad obligatorio";
                             return "principal?faces-redirect=true";
-                        }else {
-                            mensaje2 = "no se logro actualizar el usuario";
-                            return "index?faces-redirect=true";
+                        } else {
+                            if (clave.equals("")) {
+                                mensaje = "";
+                                mensaje2 = "clave obligatoria";
+                                return "principal?faces-redirect=true";
+                            } else {
+                                boolean Actualizado = false;
+                                mensaje = "";
+                                mensaje2 = "registrado";
+                                Usuario user = new Usuario();
+                                UsuarioDAO Actusuario = new UsuarioDAO();
+                                user.setIdUsuario(id);
+                                user.setNombre(nombreapellido);
+                                user.setUsuario(nick);
+                                user.setPassword(clave);
+                                user.setEmail(email);
+                                user.setDireccion(direccion);
+                                user.setFacebook(facebook);
+                                user.setTwittter(twitter);
+                                user.setGoogle(google);
+                                user.setPrivacidad(privacidad);
+                                Actualizado = Actusuario.ActualizarUsuario(user);
+                                if (Actualizado) {
+                                    return "principal?faces-redirect=true";
+                                } else {
+                                    mensaje2 = "no se logro actualizar el usuario";
+                                    return "index?faces-redirect=true";
+                                }
+                            }
                         }
-                        }
-                        }
-                        
-                        
-                      
-                       
-                    } 
-                    
+
+
+
+
+                    }
+
                 }
             }
         }
 
 
     }
-    
-     
-     
 
     public String registrar() {
         // some validations may be done here...
@@ -204,68 +206,63 @@ public class LoginController {
                         mensaje2 = "email obligatorio";
                         return "index";
                     } else {
-                        boolean registrado=false;
+                        boolean registrado = false;
                         mensaje = "";
                         mensaje2 = "registrado";
                         Usuario user = new Usuario();
                         UsuarioDAO addusuario = new UsuarioDAO();
-                        
+
                         user.setNombre(nombreapellido);
                         user.setUsuario(nick);
                         user.setPassword(clave);
                         user.setEmail(email);
                         registrado = addusuario.agregarUsuario(user);
-                        if (registrado){
+                        if (registrado) {
                             return "principal?faces-redirect=true";
-                        }else {
+                        } else {
                             mensaje2 = "no se logro registrar el usuario";
                             return "index?faces-redirect=true";
                         }
-                    } 
-                    
+                    }
+
                 }
             }
         }
 
 
     }
-    
-    public void pullValuesFromFlash(ComponentSystemEvent e) {  
-           Flash flash = FacesContext.getCurrentInstance().  
-                               getExternalContext().getFlash();  
-           usuario = (String)flash.get("usuario");  
-          
-      } 
-        public int getId() {
+
+    public void pullValuesFromFlash(ComponentSystemEvent e) {
+        Flash flash = FacesContext.getCurrentInstance().
+                getExternalContext().getFlash();
+        usuario = (String) flash.get("usuario");
+
+    }
+
+    public int getId() {
         return id;
     }
 
     public void setPrivacidad(int id) {
         this.id = id;
     }
-    
-    
-    
-    
-    
-      public String getPrivacidad() {
+
+    public String getPrivacidad() {
         return privacidad;
     }
 
     public void setPrivacidad(String privacidad) {
         this.privacidad = privacidad;
     }
-    
-    
-     public String getNick() {
+
+    public String getNick() {
         return nick;
     }
 
     public void setNick(String nick) {
         this.nick = nick;
     }
-    
-    
+
     public String getDireccion() {
         return direccion;
     }
@@ -273,6 +270,7 @@ public class LoginController {
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
+
     public String getUsuario() {
         return usuario;
     }
@@ -304,8 +302,7 @@ public class LoginController {
     public void setNombreapellido(String nombreapellido) {
         this.nombreapellido = nombreapellido;
     }
-    
- 
+
     public String getEmail() {
         return email;
     }
@@ -345,6 +342,47 @@ public class LoginController {
     public void setMensaje2(String mensaje2) {
         this.mensaje2 = mensaje2;
     }
+
+    public List<Album> getAlbumes() {
+        return albumes;
+    }
+
+    public void setAlbumes(List<Album> albumes) {
+        this.albumes = albumes;
+    }
+
+    public AlbumController getAlbumcontroller() {
+        return albumcontroller;
+    }
+
+    public void setAlbumcontroller(AlbumController albumcontroller) {
+        this.albumcontroller = albumcontroller;
+    }
     
     
+
+    public void insertaralbum() {
+        boolean registrado = false;
+        Album album = new Album();
+        AlbumDAO addalbum = new AlbumDAO();
+
+        album.setIdAlbum(4);
+        album.setNombre("prueba4");
+        album.setDescripcion("descripcion1");
+        album.setIdUsuario(id);
+        album.setPrivacidad("privada");
+        registrado = addalbum.agregarAlbum(album);
+    }
+    
+    public String paginaAlbum() {
+        albumcontroller = new AlbumController();
+        albumes = albumcontroller.consultarcatalogo(id);
+                
+        if(albumes.isEmpty()){
+            mensaje = "albumes vacio1";
+        }else{
+            mensaje = "albumes lleno1";
+        }
+        return "album?faces-redirect=true";
+    }
 }

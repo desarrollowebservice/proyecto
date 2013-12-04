@@ -94,11 +94,11 @@ public class UsuarioDAO {
             ps.setString(1, usuario.getUsuario());
             ps.setString(2, usuario.getPassword());
             ps.setString(3, usuario.getNombre());
-            ps.setString(4, " ");
+            ps.setString(4, "");
             ps.setString(5, usuario.getEmail());
-            ps.setString(6, " ");
-            ps.setString(7, " ");
-            ps.setString(8, " ");
+            ps.setString(6, "");
+            ps.setString(7, "");
+            ps.setString(8, "");
             ps.setString(9, "publico");
             ps.executeUpdate();
             resultado=true;

@@ -18,7 +18,8 @@ public class Conexion {
    private static final String DRIVER = "org.postgresql.Driver";   
    private static final String URL = "jdbc:postgresql://ec2-54-204-20-28.compute-1.amazonaws.com:5432/ddqv5h4lohc339?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";   
    private static final String USERNAME = "hoqxbrlxdjueau";   
-   private static final String PASSWORD ="p74ONV0NKa4pTA6H-cgfNqS5xU";   
+   private static final String PASSWORD ="p74ONV0NKa4pTA6H-cgfNqS5xU"; 
+   
    public static Connection getConnection() throws SQLException {   
     try {   
      Class.forName(DRIVER);   
