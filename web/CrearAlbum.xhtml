@@ -5,8 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:c="http://java.sun.com/jsp/jstl/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
     <head>
         <title>FACEPLUS::ALBUMES</title>
         <meta http-equiv="Content-Language" content="English" />
@@ -75,35 +74,38 @@
                 </td>
                 <td style="width: 600px;position:absolute;top:52px;left:310px">
 
+
+                    <h:panelGrid columns="2" width="500px" style="margin: 20px 0px 0px 0px">
+                        <h:outputLabel value="CREA TU ALBUM..." style="position:relative;top:0px; left:50px;height:36px;" class="h1" />
+                    </h:panelGrid>
+
                     <h:form>
-                        <h:panelGrid columns="2" width="500px" style="margin: 20px 0px 0px 0px">
-                            <h:outputLabel value="ALBUMES" style="position:relative;top:0px; left:50px;height:36px;" class="h1" />
-                            <h:commandButton action="CrearAlbum?faces-redirect=true" value="Crear Album" style="border: 0px; background: cornflowerblue"/>
+                        <h:panelGrid columns="3" width="900px" >
+                            <h:outputText value="Nombre del album:"></h:outputText>
+                            <h:inputText size="15" value="#{loginController.albumNombre}" class="form-control"/>
+                            <h:panelGrid columns="1" width="200px" style="float: right;" >
+                                <h:outputText value="Privacidad:"/>
+                                <h:selectOneRadio  value="#{loginController.albumpriv}">
+                                    <f:selectItem itemValue="publica" itemLabel="Publica" />
+                                    <f:selectItem itemValue="privada" itemLabel="Privada" />	   							
+                                </h:selectOneRadio>
+                            </h:panelGrid>
+                            <h:outputText value="Descripcion"></h:outputText>
+                            <h:inputTextarea rows="3" cols="15" value="#{loginController.albumDesc}" class="form-control"/>
+                            <h:outputText value=""></h:outputText>
+                            <h:outputText value=""></h:outputText>
+                            <h:outputText value=""></h:outputText>
+                            <h:commandButton action="#{loginController.insertaralbum}"  value="Crear Album" style="border: 0px; float: right;  background: cornflowerblue"/>
                         </h:panelGrid>
-                    </h:form>
-                    <h:form>
-                        <h:panelGrid columns="5" width="1000px" >
-                            <c:forEach var="album" items="#{loginController.albumes}">
-                                <h:panelGrid columns="1" width="100px" style="margin: 20px 0px 0px 0px">
-                                    <h:commandLink action="#{loginController.paginaFotosAlbum}" value="#{album.nombre}" style="margin: 0 50%;">
-                                    <f:param name="idalbum" value="#{album.idAlbum}"/>
-                                    <f:param name="AlbumNombre" value="#{album.nombre}"/>
-                                    <f:param name="AlbumDesc" value="#{album.descripcion}"/>
-                                    </h:commandLink>
-                                    <h:graphicImage value="images/multimedia.png" style="margin: 0 40%;" width="100" height="100"></h:graphicImage>
-                                </h:panelGrid>
-                            </c:forEach> 
-                            <h:panelGrid columns="1" width="100px" style="margin: 20px 0px 0px 0px">    
-                            </h:panelGrid>
-                            <h:panelGrid columns="1" width="100px" style="margin: 20px 0px 0px 0px">    
-                            </h:panelGrid>
-                            <h:panelGrid columns="1" width="100px" style="margin: 20px 0px 0px 0px">    
-                            </h:panelGrid>
-                            <h:panelGrid columns="1" width="100px" style="margin: 20px 0px 0px 0px">    
-                            </h:panelGrid>
-                            <h:panelGrid columns="1" width="100px" style="margin: 20px 0px 0px 0px">    
-                            </h:panelGrid>
+                        <h:panelGrid columns="1" width="900px" >
+                            <h:outputText value="INSTAGRAM" style=" margin-left: 50%; font-size: 20px;"/>
                         </h:panelGrid>
+                        <h:panelGrid columns="3" width="900px" >
+                            <h:outputText value=""></h:outputText>
+                            <h:outputText value=""></h:outputText>
+                            <h:commandButton action="#{loginController.insertaralbum}"  value="Crear Album" style="border: 0px; float: right;  background: cornflowerblue"/>
+                        </h:panelGrid>
+
                     </h:form>
                     <h:panelGrid columns="4" width="1000px" style="margin: 150px 0px 0px 0px;">
                         <img src="images/face.png" width="87" height="87" alt="logoface" />

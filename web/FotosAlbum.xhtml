@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <head>
+        <title>FACEPLUS::FOTOS</title>
+        <meta http-equiv="Content-Language" content="English" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" type="text/css" href="bootstrap.css" media="screen" />
+        <script src="js/application.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/jquery.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="jquery.fancybox.css" media="screen"/>
+        <script type="text/javascript" src="js/jquery.fancybox.pack.js"></script>
+        <script type="text/javascript" src="js/jquery.fancybox-media.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $(".various").fancybox({
+                    maxWidth	: 800,
+                    maxHeight	: 600,
+                    fitToView	: false,
+                    width		: '70%',
+                    height		: '70%',
+                    autoSize	: false,
+                    closeClick	: false,
+                    openEffect	: 'none',
+                    closeEffect	: 'none'
+                });
+			
+                $('.fancybox-media').fancybox({
+                    openEffect  : 'none',
+                    closeEffect : 'none',
+                    helpers : {
+                        media : true
+                    }
+                });
+            });
+        </script>
+
+        <script src="js/touchTouch.jquery.js"></script>
+        <link rel="stylesheet" type="text/css" href="touchTouch.css"/>
+        <script type="text/javascript">      
+            $(document).ready(function() {
+                setTimeout(function() {
+                    $('.magnifier').touchTouch();
+                },0);
+            });    
+        </script>
+
+    </head>
+    <h:body>
+
+        <div id="wrap">
+
+
+            <div class="navbar navbar-inverse">
+                <ul class="nav navbar-nav">
+                    <li><h4 style="color:#e67e22;">Face+</h4></li>
+                    <li><a href="principal.xhtml">Principal</a></li>
+                    <li><h:form>
+                            <h:commandLink class="nav navbar-nav" action="#{loginController.paginaAlbum}" style="text-decoration: none; color: #999999;margin: 15px 0;" value="Album"></h:commandLink>
+                        </h:form></li>
+                    <li><a href="#">Perfil</a></li>
+                    <li><a href="ActualizarUsuario.xhtml">Configuracion Perfil</a></li>
+                    <li><input style="position:relative;top:4px" type="text" placeholder="Buscar Amigos" class="form-control" /></li>
+                    <li><button style="position:relative;top:4px;height:36px;" class="tn btn-hg btn-primary">
+                            Buscar
+                        </button></li>
+                    <li>
+                        <h:form>
+                            <h:commandButton 
+                                style="position:relative;top:4px; left:400px;height:36px;" class="btn btn-danger"  value="Logout" action="#{loginController.logout}"/></h:form></li>
+                </ul>
+            </div>
+
+            <h:outputText value="#{loginController.nick}"/>
+
+            <table style="position:absolute;top:52px;" >
+                <td style="background-color:#bdc3c7; width: 300px;heigth:800px;" class="demo-sidebar " >
+                    <img style="position:relative;top:2px; left:60px;" src="images/user.png" width="180" height="180" alt="Usuariopic"  />
+
+
+
+                    <h2 class="h3">Hola tus datos son:</h2>
+
+                    <h:form>
+                        <ul>
+                            <li><h:outputText value="#{loginController.nombreapellido}"/></li>
+                            <li><h:outputText value="#{loginController.email}"/></li>
+                            <c:if test="${!empty loginController.direccion}">
+                                <li><h:outputText value="#{loginController.direccion}"/></li>
+                            </c:if>
+                            <c:if test="${!empty loginController.facebook}">
+                                <li><h:outputLink value="#{loginController.facebook}" target="_blank">FACEBOOK</h:outputLink></li>
+                            </c:if>
+                            <c:if test="${!empty loginController.google}">
+                                <li><h:outputLink value="#{loginController.google}" target="_blank">GOOGLE+</h:outputLink></li>
+                            </c:if>
+                            <c:if test="${!empty loginController.twitter}">
+                                <li><h:outputLink value="#{loginController.twitter}" target="_blank">TWITTER</h:outputLink></li>
+                            </c:if>
+
+
+                        </ul>
+                    </h:form>
+
+
+
+                </td>
+                <td style="width: 600px;position:absolute;top:52px;left:310px">
+
+                    <h:form>
+                        <h:panelGrid columns="2" width="500px" style="margin: 20px 0px 0px 0px">
+                            <h:outputLabel value="#{loginController.albumNombre}" style="position:relative;top:0px; left:50px;height:36px;" class="h1" />
+                            <h:outputLabel value="" style="position:relative;top:0px; left:50px;height:36px;" class="h1" />
+                            <h:outputLabel value="#{loginController.albumDesc}" style="position:relative;top:0px; left:50px;height:36px;" class="h4" />
+                        </h:panelGrid>
+                    </h:form>
+
+                    <h:form> 
+                        <h:panelGrid columns="6" width="900px" style="margin-left: 50px;" >
+                            <h:panelGrid columns="1" width="150px" style="margin: 20px 0px 0px 0px">
+                                <h:outputLink class="magnifier" value="http://distilleryimage5.s3.amazonaws.com/e1f8bba2526711e3ab9d123c21c1539b_6.jpg">
+                                    <h:graphicImage value="http://distilleryimage5.s3.amazonaws.com/e1f8bba2526711e3ab9d123c21c1539b_6.jpg" width="150" height="150"></h:graphicImage>
+                                </h:outputLink>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1" width="150px" style="margin: 20px 0px 0px 0px">
+                                <h:outputLink class="magnifier" value="http://distilleryimage0.s3.amazonaws.com/82a79df05d8211e3a09412eedecda317_6.jpg">
+                                    <h:graphicImage value="http://distilleryimage0.s3.amazonaws.com/82a79df05d8211e3a09412eedecda317_6.jpg" width="150" height="150"></h:graphicImage>
+                                </h:outputLink>  
+                            </h:panelGrid>
+                            <h:panelGrid columns="1" width="150px" style="margin: 20px 0px 0px 0px">
+                                <h:outputLink class="magnifier" value="http://distilleryimage6.s3.amazonaws.com/212809025d8211e3a2ca12a881e99ebc_6.jpg">
+                                    <h:graphicImage value="http://distilleryimage6.s3.amazonaws.com/212809025d8211e3a2ca12a881e99ebc_6.jpg" width="150" height="150"></h:graphicImage>
+                                </h:outputLink>
+                            </h:panelGrid>
+                            <!-- <h:panelGrid columns="1" width="150px" style="margin: 20px 0px 0px 0px">
+                                 <h:outputLink class="various fancybox.iframe" value="http://www.youtube.com/embed/KZJSx45Ya7E">
+                                     <h:graphicImage value="-http://www.youtube.com/embed/KZJSx45Ya7E" width="150" height="150"></h:graphicImage>
+                                 </h:outputLink>
+                             </h:panelGrid>-->
+                            <c:forEach var="multimedia" items="#{loginController.multimedia}">
+                                <h:panelGrid columns="1" width="150px" style="margin: 20px 0px 0px 0px">
+                                    <h:outputLink class="magnifier" value="#{multimedia.url}">
+                                        <h:graphicImage value="#{multimedia.url}" width="150" height="150"></h:graphicImage>
+                                    </h:outputLink>
+                                </h:panelGrid>
+                            </c:forEach> 
+                            <h:panelGrid columns="1" width="150px" style="margin: 20px 0px 0px 0px">    
+                            </h:panelGrid>
+                            <h:panelGrid columns="1" width="150px" style="margin: 20px 0px 0px 0px">    
+                            </h:panelGrid>
+                            <h:panelGrid columns="1" width="150px" style="margin: 20px 0px 0px 0px">    
+                            </h:panelGrid>
+                            <h:panelGrid columns="1" width="150px" style="margin: 20px 0px 0px 0px">    
+                            </h:panelGrid>
+                            <h:panelGrid columns="1" width="150px" style="margin: 20px 0px 0px 0px">    
+                            </h:panelGrid>
+                        </h:panelGrid>
+
+                    </h:form>
+
+
+                    <h:panelGrid columns="4" width="1000px" style="margin: 150px 0px 0px 0px;">
+                        <img src="images/face.png" width="87" height="87" alt="logoface" />
+                        <img src="images/Twitter.png" width="90" height="90" alt="logotwiter" />
+                        <img src="images/insta.png" width="85" height="85" alt="logoinsta" />
+                        <img src="images/soundcloud.png" width="180" height="90" alt="logosoundcloud" />
+                    </h:panelGrid>
+
+                </td>
+
+            </table>
+
+
+
+
+
+
+
+
+            <!--<img style="position:absolute; top: 120px; left: 630px;" src="images/usuario.png" width="100" height="100" alt="usuario" /><br />
+            -->
+
+
+
+
+
+
+
+
+        </div>
+
+    </h:body>
+    <!-- <style>body{background-image:url("images/fondo2.png");}</style> -->
+
+</html>
+
+
+
+
+
+
+

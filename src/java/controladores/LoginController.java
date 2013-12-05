@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -21,16 +22,16 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.faces.event.ComponentSystemEvent;
 import negocio.Album;
+import negocio.Multimedia;
 import negocio.Usuario;
 
 @ManagedBean(name = "loginController", eager = true)
 @RequestScoped
 public class LoginController {
 
+    //Atributos de usuario
     private String usuario;
     private String clave;
-    private String mensaje;
-    private String mensaje2;
     private String nombreapellido;
     private String email;
     private String facebook;
@@ -40,8 +41,15 @@ public class LoginController {
     private String nick;
     private String privacidad;
     private int id;
+    //mensajes de respuesta
+    private String mensaje;
+    private String mensaje2;
+    //atributos de albumes
+    private String AlbumNombre;
+    private String AlbumDesc;
+    private String Albumpriv;
     private List<Album> albumes;
-    private AlbumController albumcontroller;
+    private List<Multimedia> multimedia;
 
     public LoginController() {
         this.usuario = "";
@@ -55,11 +63,13 @@ public class LoginController {
         this.google = "";
         this.direccion = "";
         this.nick = "";
-        this.privacidad = "";
+        this.privacidad = "publica";
         this.id = 0;
         this.albumes = new ArrayList<Album>();
-        
-
+        this.multimedia = new ArrayList<Multimedia>();
+        this.AlbumNombre = "";
+        this.AlbumDesc = "";
+        this.Albumpriv = "publica";
     }
 
     public String login() {
@@ -119,36 +129,36 @@ public class LoginController {
         if (usuario.equals("")) {
             mensaje = "";
             mensaje2 = "Nombre obligatorio";
-            return "principal?faces-redirect=true";
+            return "ActualizarUsuario?faces-redirect=true";
         } else {
             if (clave.equals("")) {
                 mensaje = "";
                 mensaje2 = "clave obligatorio";
-                return "principal?faces-redirect=true";
+                return "ActualizarUsuario?faces-redirect=true";
             } else {
                 if (email.equals("")) {
                     mensaje = "";
                     mensaje2 = "email obligatorio";
-                    return "principal?faces-redirect=true";
+                    return "ActualizarUsuario?faces-redirect=true";
                 } else {
                     if (nick.equals("")) {
                         mensaje = "";
                         mensaje2 = "Usuario obligatorio";
-                        return "principal?faces-redirect=true";
+                        return "ActualizarUsuario?faces-redirect=true";
                     } else {
                         if (privacidad.equals("")) {
                             mensaje = "";
                             mensaje2 = "privacidad obligatorio";
-                            return "principal?faces-redirect=true";
+                            return "ActualizarUsuario?faces-redirect=true";
                         } else {
                             if (clave.equals("")) {
                                 mensaje = "";
                                 mensaje2 = "clave obligatoria";
-                                return "principal?faces-redirect=true";
+                                return "ActualizarUsuario?faces-redirect=true";
                             } else {
                                 boolean Actualizado = false;
                                 mensaje = "";
-                                mensaje2 = "registrado";
+                                mensaje2 = "Actualizado";
                                 Usuario user = new Usuario();
                                 UsuarioDAO Actusuario = new UsuarioDAO();
                                 user.setIdUsuario(id);
@@ -166,7 +176,7 @@ public class LoginController {
                                     return "principal?faces-redirect=true";
                                 } else {
                                     mensaje2 = "no se logro actualizar el usuario";
-                                    return "index?faces-redirect=true";
+                                    return "ActualizarUsuario?faces-redirect=true";
                                 }
                             }
                         }
@@ -351,38 +361,97 @@ public class LoginController {
         this.albumes = albumes;
     }
 
-    public AlbumController getAlbumcontroller() {
-        return albumcontroller;
+    public String getAlbumNombre() {
+        return AlbumNombre;
     }
 
-    public void setAlbumcontroller(AlbumController albumcontroller) {
-        this.albumcontroller = albumcontroller;
+    public void setAlbumNombre(String AlbumNombre) {
+        this.AlbumNombre = AlbumNombre;
+    }
+
+    public String getAlbumDesc() {
+        return AlbumDesc;
+    }
+
+    public void setAlbumDesc(String AlbumDesc) {
+        this.AlbumDesc = AlbumDesc;
+    }
+
+    public String getAlbumpriv() {
+        return Albumpriv;
+    }
+
+    public void setAlbumpriv(String Albumpriv) {
+        this.Albumpriv = Albumpriv;
+    }
+
+    public List<Multimedia> getMultimedia() {
+        return multimedia;
+    }
+
+    public void setMultimedia(List<Multimedia> multimedia) {
+        this.multimedia = multimedia;
     }
     
     
 
-    public void insertaralbum() {
-        boolean registrado = false;
-        Album album = new Album();
-        AlbumDAO addalbum = new AlbumDAO();
+    public String insertaralbum() {
+        if (AlbumNombre.equals("")) {
+            mensaje2 = "Nombre Obligatorio";
+            return "CrearAlbum?faces-redirect=true";
+        } else {
+            boolean registrado = false;
+            AlbumController albumcontroller = new AlbumController();
+            Album album = new Album();
+            //album.setIdAlbum(4);
+            album.setNombre(AlbumNombre);
+            album.setDescripcion(AlbumDesc);
+            album.setIdUsuario(id);
+            album.setPrivacidad(Albumpriv);
+            registrado = albumcontroller.agregarAlbum(album);
+            if (registrado) {
+                AlbumNombre = "";
+                AlbumDesc = "";
+                Albumpriv = "publica";
+                mensaje2 = "";
+                return paginaAlbum();
+            } else {
+                return "CrearAlbum?faces-redirect=true";
+            }
+        }
 
-        album.setIdAlbum(4);
-        album.setNombre("prueba4");
-        album.setDescripcion("descripcion1");
-        album.setIdUsuario(id);
-        album.setPrivacidad("privada");
-        registrado = addalbum.agregarAlbum(album);
     }
-    
+
     public String paginaAlbum() {
-        albumcontroller = new AlbumController();
+        this.AlbumNombre =  ""; 
+        this.AlbumDesc = ""; 
+        this.Albumpriv = "publica";
+        AlbumController albumcontroller = new AlbumController();
         albumes = albumcontroller.consultarcatalogo(id);
-                
-        if(albumes.isEmpty()){
+
+        if (albumes.isEmpty()) {
             mensaje = "albumes vacio1";
-        }else{
+        } else {
             mensaje = "albumes lleno1";
         }
         return "album?faces-redirect=true";
+    }
+    
+    public String paginaFotosAlbum() {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        Map<String,String> params = 
+        fc.getExternalContext().getRequestParameterMap();
+        this.AlbumNombre =  params.get("AlbumNombre"); 
+        this.AlbumDesc = params.get("AlbumDesc"); 
+        int albumID = Integer.parseInt(params.get("idalbum")); 
+        AlbumController albumcontroller = new AlbumController();
+        multimedia = albumcontroller.consultarmultimedia(albumID);
+
+        if (multimedia.isEmpty()) {
+            mensaje = "albumes vacio1";
+        } else {
+            mensaje = "albumes lleno1";
+        }
+        return "FotosAlbum?faces-redirect=true";
     }
 }

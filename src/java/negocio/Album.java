@@ -20,14 +20,16 @@ public class Album {
         this.nombre = "";
         this.descripcion = "";
         this.privacidad = "";
+        this.idUsuario = 0;
     }
   
     
-    public Album(int idAlbum, String nombre, String descripcion, String privacidad) {
+    public Album(int idAlbum, String nombre, String descripcion, String privacidad,int idUsuario) {
         this.idAlbum = idAlbum;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.privacidad = privacidad;
+        this.idUsuario = idUsuario;
     }
 
     public int getIdAlbum() {

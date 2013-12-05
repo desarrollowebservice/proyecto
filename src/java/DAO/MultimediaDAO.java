@@ -13,52 +13,52 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import negocio.Album;
+import negocio.Multimedia;
 
 /**
  *
  * @author henry
  */
-public class AlbumDAO {
+public class MultimediaDAO {
 
-    public List<Album> consultaralbumes(int idUsuario) {
+    public List<Multimedia> consultarmultimedia(int albumID) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        List<Album> albumes = new ArrayList<Album>();
+        List<Multimedia> multimedia = new ArrayList<Multimedia>();
 
         try {
             //1.- obtengo la conexion
             con = Conexion.getConnection();
             //2.- obtengo la sentencia
-            ps = con.prepareStatement("select * from album_usuario where id_usuario=?");//
-            ps.setInt(1, idUsuario);
+            ps = con.prepareStatement("select * from multimedia where id_album=?");//
+            ps.setInt(1, albumID);
             
             rs = ps.executeQuery();
             //4.- ejecuto
 
             //5.- leo
             while (rs.next()) {
-                Album myalbum = new Album();
-                myalbum.setNombre(rs.getString("NAME"));
-                myalbum.setDescripcion(rs.getString("DESCRIPCION"));
+                Multimedia myalbum = new Multimedia();
+                myalbum.setIdMultimedia(rs.getInt("ID_MULTIMEDIA"));
+                myalbum.setNombre(rs.getString("NOMBRE"));
+                myalbum.setUrl(rs.getString("URL"));
                 myalbum.setIdAlbum(rs.getInt("ID_ALBUM"));
-                myalbum.setIdUsuario(rs.getInt("ID_USUARIO"));
-                myalbum.setPrivacidad(rs.getString("PRIVACIDAD"));
-                albumes.add(myalbum);
+                multimedia.add(myalbum);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(AlbumDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MultimediaDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 if (con != null) {
                     con.close();
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(AlbumDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MultimediaDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         
-        return albumes;
+        return multimedia;
     }
 
     public boolean agregarAlbum(Album album) {
@@ -83,7 +83,7 @@ public class AlbumDAO {
 
         } catch (SQLException ex) {
             resultado = false;
-            Logger.getLogger(AlbumDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MultimediaDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
 
