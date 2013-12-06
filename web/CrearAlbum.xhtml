@@ -14,15 +14,22 @@
 
         <script src="instafeed.js"></script>
         <script type="text/javascript">
+            function myFunction(dato)
+            {
+                alert("Welcome "+dato);
+            }
+        </script>
+        <script type="text/javascript">
             var feed = new Instafeed({
+                target: 'photoInstagram',
                 get: 'tagged',
                 tagName: '#{loginController.busqueda}',
-        
                 clientId: 'f7f319ceb411486593db148972918108',
                 limit: '60',
-                template: '<h:graphicImage value="{{image}}"> </h:graphicImage>'
+                template: '<h:graphicImage value="{{image}}" />'
             });
             feed.run();
+        
         </script>
 
     </head>
@@ -30,7 +37,7 @@
 
         <div id="wrap">
 
-
+            
             <div class="navbar navbar-inverse">
                 <ul class="nav navbar-nav">
                     <li><h4 style="color:#e67e22;">Face+</h4></li>
@@ -90,6 +97,7 @@
 
                     <h:panelGrid columns="2" width="500px" style="margin: 20px 0px 0px 0px">
                         <h:outputLabel value="CREA TU ALBUM..." style="position:relative;top:0px; left:50px;height:36px;" class="h1" />
+                        <h:outputLabel value="#{loginController.mensaje}"/>
                     </h:panelGrid>
 
                     <h:form>
@@ -117,7 +125,9 @@
                                 <h:inputText class="search-tag" type="text" tabindex="1" value="#{loginController.busqueda}"/>
                                 <h:commandButton class="btn" id="search-button" dir="ltr" tabindex="2" type="submit" value="Buscar"></h:commandButton>
                             </h:panelGrid>
-                            <div id="instafeed"></div>
+
+                           <div id="photoInstagram"></div> 
+                            
                         </h:panelGrid>
                         <h:panelGrid columns="3" width="900px" >
                             <h:outputText value=""></h:outputText>

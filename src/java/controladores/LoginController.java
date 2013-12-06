@@ -51,6 +51,7 @@ public class LoginController {
     private List<Album> albumes;
     private List<Multimedia> multimedia;
     private String busqueda;
+    private String agregarFoto;
 
     public LoginController() {
         this.usuario = "";
@@ -72,6 +73,7 @@ public class LoginController {
         this.AlbumDesc = "";
         this.Albumpriv = "publica";
         this.busqueda = "surf";
+        this.agregarFoto = "";
     }
 
     public String login() {
@@ -402,6 +404,16 @@ public class LoginController {
     public void setBusqueda(String busqueda) {
         this.busqueda = busqueda;
     }
+
+    public String getAgregarFoto() {
+        return agregarFoto;
+    }
+
+    public void setAgregarFoto(String agregarFoto) {
+        this.agregarFoto = agregarFoto;
+    }
+    
+    
     
     
 
@@ -463,5 +475,14 @@ public class LoginController {
             mensaje = "albumes lleno1";
         }
         return "FotosAlbum?faces-redirect=true";
+    }
+    
+    public String updateAgregarFoto(){
+        FacesContext fc = FacesContext.getCurrentInstance();
+        Map<String,String> params = 
+        fc.getExternalContext().getRequestParameterMap();
+        this.mensaje =  params.get("menuItem"); 
+        mensaje = "hola mundo";
+        return "#";
     }
 }
