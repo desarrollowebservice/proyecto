@@ -50,6 +50,7 @@ public class LoginController {
     private String Albumpriv;
     private List<Album> albumes;
     private List<Multimedia> multimedia;
+    private String busqueda;
 
     public LoginController() {
         this.usuario = "";
@@ -70,6 +71,7 @@ public class LoginController {
         this.AlbumNombre = "";
         this.AlbumDesc = "";
         this.Albumpriv = "publica";
+        this.busqueda = "surf";
     }
 
     public String login() {
@@ -391,6 +393,14 @@ public class LoginController {
 
     public void setMultimedia(List<Multimedia> multimedia) {
         this.multimedia = multimedia;
+    }
+
+    public String getBusqueda() {
+        return busqueda;
+    }
+
+    public void setBusqueda(String busqueda) {
+        this.busqueda = busqueda;
     }
     
     

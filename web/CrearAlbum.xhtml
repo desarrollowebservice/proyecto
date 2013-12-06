@@ -12,6 +12,19 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel="stylesheet" type="text/css" href="bootstrap.css" media="screen" />
 
+        <script src="instafeed.js"></script>
+        <script type="text/javascript">
+            var feed = new Instafeed({
+                get: 'tagged',
+                tagName: '#{loginController.busqueda}',
+        
+                clientId: 'f7f319ceb411486593db148972918108',
+                limit: '60',
+                template: '<h:graphicImage value="{{image}}"> </h:graphicImage>'
+            });
+            feed.run();
+        </script>
+
     </head>
     <h:body>
 
@@ -97,8 +110,14 @@
                             <h:outputText value=""></h:outputText>
                             <h:commandButton action="#{loginController.insertaralbum}"  value="Crear Album" style="border: 0px; float: right;  background: cornflowerblue"/>
                         </h:panelGrid>
-                        <h:panelGrid columns="1" width="900px" >
+                        <h:panelGrid columns="1" width="1000px" >
                             <h:outputText value="INSTAGRAM" style=" margin-left: 50%; font-size: 20px;"/>
+                            <h:panelGrid columns="3" width="300px">
+                                <h:outputText value="Tag:"></h:outputText>
+                                <h:inputText class="search-tag" type="text" tabindex="1" value="#{loginController.busqueda}"/>
+                                <h:commandButton class="btn" id="search-button" dir="ltr" tabindex="2" type="submit" value="Buscar"></h:commandButton>
+                            </h:panelGrid>
+                            <div id="instafeed"></div>
                         </h:panelGrid>
                         <h:panelGrid columns="3" width="900px" >
                             <h:outputText value=""></h:outputText>
