@@ -19,7 +19,7 @@ public class Usuario {
     private String twittter;
     private String google;
     private String privacidad;
-
+    private String imagenperfil;
     public Usuario() {
         this.idUsuario = 0;
         this.usuario = "";
@@ -31,9 +31,10 @@ public class Usuario {
         this.twittter = "";
         this.google = "";
         this.privacidad = "";
+        this.imagenperfil="";
     }
 
-    public Usuario(int idUsuario, String usuario, String password, String Nombre, String apellido, String direccion, String email, String facebook, String twittter, String google, String privacidad) {
+    public Usuario(int idUsuario, String usuario, String password, String Nombre, String apellido, String direccion, String email, String facebook, String twittter, String google, String privacidad,String imagenperfil) {
         this.idUsuario = idUsuario;
         this.usuario = usuario;
         this.password = password;
@@ -44,6 +45,15 @@ public class Usuario {
         this.twittter = twittter;
         this.google = google;
         this.privacidad = privacidad;
+        this.imagenperfil = imagenperfil;
+    }
+
+    public String getImagenperfil() {
+        return imagenperfil;
+    }
+
+    public void setImagenperfil(String imagenperfil) {
+        this.imagenperfil = imagenperfil;
     }
     
     

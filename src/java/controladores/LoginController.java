@@ -52,7 +52,11 @@ public class LoginController {
     private List<Multimedia> multimedia;
     private String busqueda;
     private String agregarFoto;
-
+    //atributos amigos
+    private ArrayList<Usuario> listaUsuario;
+    private String busquedaUsu;
+    
+    
     public LoginController() {
         this.usuario = "";
         this.clave = "";
@@ -118,6 +122,20 @@ public class LoginController {
         this.privacidad = "";
         this.id = 0;
         return "index?faces-redirect=true";
+    }
+    
+    
+     public String  BusquedaUsuario() {
+        // some validations may be done here...
+        UsuarioDAO busquedaUsu = new UsuarioDAO();
+     /*  if ( (this.busquedaUsu == null) || (this.busquedaUsu.isEmpty()) ) 
+       {  this.setBusquedaUsu("hen");}*/
+       
+       
+       this.listaUsuario  = busquedaUsu.BusquedaUsuario(this.busquedaUsu);
+        
+       this.busquedaUsu="";
+       return "BusquedaUsu?faces-redirect=true";
     }
 
     public boolean isLoggedIn() {
@@ -253,6 +271,28 @@ public class LoginController {
 
     }
 
+    public ArrayList<Usuario> getListaUsuario() {
+        return listaUsuario;
+    }
+
+    public void setListaUsuario(ArrayList<Usuario> listaUsuario) {
+        this.listaUsuario = listaUsuario;
+    }
+
+    public String getBusquedaUsu() {
+        return busquedaUsu;
+    }
+
+    public void setBusquedaUsu(String busquedaUsu) {
+        this.busquedaUsu = busquedaUsu;
+    }
+
+    
+    
+    
+    
+    
+    
     public int getId() {
         return id;
     }

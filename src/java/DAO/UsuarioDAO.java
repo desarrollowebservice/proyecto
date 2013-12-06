@@ -20,7 +20,56 @@ import negocio.Usuario;
  */
 public class UsuarioDAO {
 
-    public Usuario conseguirUsuario(String usuario, String clave) {
+    
+    public ArrayList<Usuario> BusquedaUsuario(String palabra) {
+
+        String sql;
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+     
+       ArrayList<Usuario> listaUsuario = new ArrayList<Usuario>();
+
+        try {
+   if ( (palabra == null) || (palabra.isEmpty()) ) {
+    // cadena está vacía
+       con = Conexion.getConnection();
+            ps = con.prepareStatement("select * from Usuario ");
+            //ps.setString(1, usuario);
+            
+            rs = ps.executeQuery();
+}
+   else {    con = Conexion.getConnection();
+            ps = con.prepareStatement("select * from Usuario where nombre LIKE '%"+palabra+"%'");
+           // ps.setString(1,palabra);
+            
+            rs = ps.executeQuery();
+   }
+            while (rs.next()) {
+
+            Usuario user = new Usuario(rs.getInt("ID_USUARIO"), rs.getString("USUARIO"), rs.getString("PASSWD"), rs.getString("NOMBRE"), "",rs.getString("DIRECCION"),rs.getString("EMAIL"),rs.getString("CTAFACEBOOK"), rs.getString("CTATWITER"), rs.getString("CTAGOOGLE"),rs.getString("PRIVACIDAD"),rs.getString("IMAGENPERFIL"));
+            listaUsuario.add(user);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+               
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        return listaUsuario;
+    }
+    
+    
+    
+      public Usuario conseguirUsuario(String usuario, String clave) {
 
         String sql;
         Connection con = null;
@@ -68,6 +117,7 @@ public class UsuarioDAO {
         return user;
     }
     
+    
     public boolean ValidarUsuario (String usuario,String clave){
         Usuario user= new Usuario();
         user=this.conseguirUsuario(usuario, clave);
@@ -88,8 +138,8 @@ public class UsuarioDAO {
         try {
             
             con = Conexion.getConnection();
-            ps = con.prepareStatement("INSERT INTO usuario(ID_USUARIO,USUARIO,PASSWD,NOMBRE,DIRECCION,EMAIL,CTAFACEBOOK,CTATWITER,CTAGOOGLE,PRIVACIDAD)"
-                    + " VALUES(nextval('usuarioseq'),?,?,?,?,?,?,?,?,?)");//10
+            ps = con.prepareStatement("INSERT INTO usuario(ID_USUARIO,USUARIO,PASSWD,NOMBRE,DIRECCION,EMAIL,CTAFACEBOOK,CTATWITER,CTAGOOGLE,PRIVACIDAD,IMAGENPERFIL)"
+                    + " VALUES(nextval('usuarioseq'),?,?,?,?,?,?,?,?,?,?)");//10
             
             ps.setString(1, usuario.getUsuario());
             ps.setString(2, usuario.getPassword());
@@ -100,6 +150,7 @@ public class UsuarioDAO {
             ps.setString(7, "");
             ps.setString(8, "");
             ps.setString(9, "publico");
+            ps.setString(10, "");
             ps.executeUpdate();
             resultado=true;
           //  con.commit();
