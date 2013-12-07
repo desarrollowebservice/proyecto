@@ -25,12 +25,11 @@ public class AlbumController {
         AlbumDAO midao = new AlbumDAO();
         return midao.agregarAlbum(album);
     }
-
-    public List<Multimedia> consultarmultimedia(int albumID) {
-        MultimediaDAO midao = new MultimediaDAO();
-        return midao.consultarmultimedia(albumID);
+    
+    public int ObtenerUltimoAlbum(int idUsuario) {
+        AlbumDAO midao = new AlbumDAO();
+        return midao.ObtenerUltimoAlbum(idUsuario);
     }
-    
-    
+
     
 }

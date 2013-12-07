@@ -82,7 +82,7 @@
 
             <table style="position:absolute;top:52px;" >
                 <td style="background-color:#bdc3c7; width: 300px;heigth:800px;" class="demo-sidebar " >
-                    <img style="position:relative;top:2px; left:60px;" src="images/user.png" width="180" height="180" alt="Usuariopic"  />
+                    <h:graphicImage style="position:relative;top:2px; left:60px;" value="#{loginController.imagenperfil}"  width="150" height="150"/>
 
 
 
@@ -124,26 +124,6 @@
 
                     <h:form> 
                         <h:panelGrid columns="6" width="900px" style="margin-left: 50px;" >
-                            <h:panelGrid columns="1" width="150px" style="margin: 20px 0px 0px 0px">
-                                <h:outputLink class="magnifier" value="http://distilleryimage5.s3.amazonaws.com/e1f8bba2526711e3ab9d123c21c1539b_6.jpg">
-                                    <h:graphicImage value="http://distilleryimage5.s3.amazonaws.com/e1f8bba2526711e3ab9d123c21c1539b_6.jpg" width="150" height="150"></h:graphicImage>
-                                </h:outputLink>
-                            </h:panelGrid>
-                            <h:panelGrid columns="1" width="150px" style="margin: 20px 0px 0px 0px">
-                                <h:outputLink class="magnifier" value="http://distilleryimage0.s3.amazonaws.com/82a79df05d8211e3a09412eedecda317_6.jpg">
-                                    <h:graphicImage value="http://distilleryimage0.s3.amazonaws.com/82a79df05d8211e3a09412eedecda317_6.jpg" width="150" height="150"></h:graphicImage>
-                                </h:outputLink>  
-                            </h:panelGrid>
-                            <h:panelGrid columns="1" width="150px" style="margin: 20px 0px 0px 0px">
-                                <h:outputLink class="magnifier" value="http://distilleryimage6.s3.amazonaws.com/212809025d8211e3a2ca12a881e99ebc_6.jpg">
-                                    <h:graphicImage value="http://distilleryimage6.s3.amazonaws.com/212809025d8211e3a2ca12a881e99ebc_6.jpg" width="150" height="150"></h:graphicImage>
-                                </h:outputLink>
-                            </h:panelGrid>
-                            <!-- <h:panelGrid columns="1" width="150px" style="margin: 20px 0px 0px 0px">
-                                 <h:outputLink class="various fancybox.iframe" value="http://www.youtube.com/embed/KZJSx45Ya7E">
-                                     <h:graphicImage value="-http://www.youtube.com/embed/KZJSx45Ya7E" width="150" height="150"></h:graphicImage>
-                                 </h:outputLink>
-                             </h:panelGrid>-->
                             <c:forEach var="multimedia" items="#{loginController.multimedia}">
                                 <h:panelGrid columns="1" width="150px" style="margin: 20px 0px 0px 0px">
                                     <h:outputLink class="magnifier" value="#{multimedia.url}">

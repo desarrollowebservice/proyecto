@@ -15,7 +15,6 @@ import java.util.logging.Logger;
 import negocio.Album;
 import negocio.Multimedia;
 
-
 /**
  *
  * @author henry
@@ -62,7 +61,7 @@ public class MultimediaDAO {
         return multimedia;
     }
 
-    public boolean agregarAlbum(Album album) {
+    public boolean agregarMultimedia(Multimedia multimedia) {
         Connection con = null;
         boolean resultado = false;
         PreparedStatement ps = null;
@@ -70,14 +69,12 @@ public class MultimediaDAO {
         try {
 
             con = Conexion.getConnection();
-            ps = con.prepareStatement("INSERT INTO album_usuario(id_album,name,privacidad,id_usuario,descripcion)"
-                    + " VALUES(nextval('seq_album'),?,?,?,?)");
-
-            //ps.setInt(1, album.getIdAlbum());
-            ps.setString(1, album.getNombre());
-            ps.setString(2, album.getPrivacidad());
-            ps.setInt(3, album.getIdUsuario());
-            ps.setString(4, album.getDescripcion());
+            ps = con.prepareStatement("INSERT INTO multimedia(id_multimedia,nombre,url,id_album)"
+                    + " VALUES(nextval('seq_multimedia'),?,?,?)");
+            
+            ps.setString(1, multimedia.getNombre());
+            ps.setString(2, multimedia.getUrl());
+            ps.setInt(3, multimedia.getIdAlbum());
             ps.executeUpdate();
             resultado = true;
             //  con.commit();
@@ -93,7 +90,7 @@ public class MultimediaDAO {
                     con.close();
                 }
             } catch (SQLException ex) {
-                // Logger.getLogger(temaDAO.class.getName()).log(Level.SEVERE, null, ex);
+                 Logger.getLogger(MultimediaDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 

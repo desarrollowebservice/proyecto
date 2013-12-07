@@ -12,6 +12,30 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel="stylesheet" type="text/css" href="bootstrap.css" media="screen" />
 
+        <script src="instafeed.js"></script>
+        <script type="text/javascript">
+            function myFunction(dato)
+            {
+                alert("Welcome "+dato);
+            }
+        </script>
+        <script type="text/javascript">
+            var feed = new Instafeed({
+                target: 'photoInstagram',
+                get: 'tagged',
+                tagName: '#{loginController.busqueda}',
+                clientId: 'f7f319ceb411486593db148972918108',
+                limit: '60',
+                resolution: 'standard_resolution',
+                template:
+                    '<h:graphicImage value="{{image}}"  width="150" height="150"/>'+
+                    '<h:inputText size="15" value="{{image}}" disabled="true"/>'
+                    
+            });
+            feed.run();
+        
+        </script>
+
     </head>
     <h:body>
 
@@ -42,7 +66,7 @@
 
             <table style="position:absolute;top:52px;" >
                 <td style="background-color:#bdc3c7; width: 300px;heigth:800px;" class="demo-sidebar " >
-                    <img style="position:relative;top:2px; left:60px;" src="images/user.png" width="180" height="180" alt="Usuariopic"  />
+                    <h:graphicImage style="position:relative;top:2px; left:60px;" value="#{loginController.imagenperfil}"  width="150" height="150"/>
 
 
 
@@ -77,6 +101,7 @@
 
                     <h:panelGrid columns="2" width="500px" style="margin: 20px 0px 0px 0px">
                         <h:outputLabel value="CREA TU ALBUM..." style="position:relative;top:0px; left:50px;height:36px;" class="h1" />
+                        <h:outputLabel value="#{loginController.mensaje}"/>
                     </h:panelGrid>
 
                     <h:form>
@@ -96,9 +121,23 @@
                             <h:outputText value=""></h:outputText>
                             <h:outputText value=""></h:outputText>
                             <h:commandButton action="#{loginController.insertaralbum}"  value="Crear Album" style="border: 0px; float: right;  background: cornflowerblue"/>
-                        </h:panelGrid>
+                        </h:panelGrid></h:form>
+                    <h:form>
                         <h:panelGrid columns="1" width="900px" >
                             <h:outputText value="INSTAGRAM" style=" margin-left: 50%; font-size: 20px;"/>
+                            <h:panelGrid columns="2" width="400px">
+                                <h:panelGrid columns="3" width="300px">
+                                    <h:outputText value="Tag:"></h:outputText>
+                                    <h:inputText class="search-tag" type="text" tabindex="1" value="#{loginController.busqueda}"/>
+                                    <h:commandButton class="btn" id="search-button" dir="ltr" tabindex="2" type="submit" value="Buscar"></h:commandButton>
+                                </h:panelGrid>
+                                
+                               
+                            </h:panelGrid>
+
+                            <div id="photoInstagram"></div> 
+
+
                         </h:panelGrid>
                         <h:panelGrid columns="3" width="900px" >
                             <h:outputText value=""></h:outputText>
@@ -106,6 +145,14 @@
                             <h:commandButton action="#{loginController.insertaralbum}"  value="Crear Album" style="border: 0px; float: right;  background: cornflowerblue"/>
                         </h:panelGrid>
 
+                    </h:form>
+                    <h:form>
+                        <h:panelGrid columns="3" width="300px">
+                                    <h:outputText value="Imagen:"></h:outputText>
+                                    <h:inputText value="#{loginController.imagenSeleccionada}" size="15" class="form-control"/>
+                                    <h:commandButton action="#{loginController.imagenesParaAgregar}" style="border: 0px; float: right;  background: cornflowerblue" value="Agregar Foto"></h:commandButton>
+                                </h:panelGrid>
+                        
                     </h:form>
                     <h:panelGrid columns="4" width="1000px" style="margin: 150px 0px 0px 0px;">
                         <img src="images/face.png" width="87" height="87" alt="logoface" />

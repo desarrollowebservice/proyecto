@@ -55,10 +55,12 @@ function loginFinishedCallback(authResult) {
     var email = '';
     var logro = '';
     var nombre = '';
+    var id = '';
 
     if (obj['email']) {
       email = obj['email'];
       nombre = obj['name'];
+      id = obj['id'];
     }
     
    // name, public profile URL, and photo
@@ -71,6 +73,7 @@ function loginFinishedCallback(authResult) {
     toggleElement('name');
     document.getElementById('registro:nombre').value = nombre;
     document.getElementById('registro:email').value = email;
+    document.getElementById('registro:imagen').value = "https://profiles.google.com/s2/photos/profile/"+id;
   }
 
   function toggleElement(id) {
@@ -114,7 +117,29 @@ function loginFinishedCallback(authResult) {
    
     
    
-   <div id="signin-button" class="show">
+   
+  
+    </h:form>
+       <h:form style=" width: 300px;">
+       </h:form>
+       <h:form id="registro" style="background: #e67e22; width: 300px;position:absolute;
+		top: 120px;
+		left: 630px;padding:0 0 0 7%;border-radius: 15px 15px 15px 15px;opacity: 0.9; ">
+            <h:panelGrid columns="1">
+            <h3>Nombre y Apellido:</h3>
+            <h:inputText disabled="true" id="nombre" size="15" value="#{loginController.nombreapellido}" class="form-control"/>
+            <h3>Usuario:</h3>
+            <h:inputText size="15" value="#{loginController.nick}" class="form-control"/>
+            <h3>Clave:</h3>
+            <h:inputSecret size="15" value="#{loginController.clave}" class="form-control"/>
+            <h3>correo electronico:</h3>
+            <h:inputText disabled="true" id="email" size="15" value="#{loginController.email}" class="form-control"/>
+            <h:inputHidden id="imagen" value="#{loginController.imagenperfil}"/>
+            <h:outputText value=""></h:outputText>
+            <h:outputText value=""></h:outputText>
+            <h:outputText value=""></h:outputText>
+            <h:commandButton action="#{loginController.registrar}" value="REGISTRAR" style="border: 0px; background: cornflowerblue"/>
+            <div id="signin-button" class="show">
      <div class="g-signin" data-callback="loginFinishedCallback"
       data-approvalprompt="force"
       data-clientid="264370562094.apps.googleusercontent.com"
@@ -126,28 +151,6 @@ function loginFinishedCallback(authResult) {
     <!-- In most cases, you don't want to use approvalprompt=force. Specified
     here to facilitate the demo.-->
      </div> 
-  
-    </h:form>
-       <h:form style=" width: 300px;">
-       </h:form>
-       <h:form id="registro" style="background: #e67e22; width: 300px;position:absolute;
-		top: 120px;
-		left: 630px;padding:0 0 0 7%;border-radius: 15px 15px 15px 15px;opacity: 0.9; ">
-            <h:panelGrid columns="1">
-            <h3>Nombre y Apellido:</h3>
-            <h:inputText id="nombre" size="15" value="#{loginController.nombreapellido}" class="form-control"/>
-            <h3>Usuario:</h3>
-            <h:inputText size="15" value="#{loginController.nick}" class="form-control"/>
-            <h3>Clave:</h3>
-            <h:inputSecret size="15" value="#{loginController.clave}" class="form-control"/>
-            <h3>correo electronico:</h3>
-            <h:inputText id="email" size="15" value="#{loginController.email}" class="form-control"/>
-            <h:outputText value=""></h:outputText>
-            <h:outputText value=""></h:outputText>
-            <h:outputText value=""></h:outputText>
-            <h:outputText value=""></h:outputText>
-            <h:commandButton action="#{loginController.registrar}" value="REGISTRAR" style="border: 0px; background: cornflowerblue"/>
-      
             <br/>
             <h:outputText value="#{loginController.mensaje2}"/>
             </h:panelGrid>

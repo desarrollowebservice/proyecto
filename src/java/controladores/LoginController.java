@@ -15,6 +15,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -41,6 +42,7 @@ public class LoginController {
     private String nick;
     private String privacidad;
     private int id;
+    private String imagenperfil;
     //mensajes de respuesta
     private String mensaje;
     private String mensaje2;
@@ -50,6 +52,10 @@ public class LoginController {
     private String Albumpriv;
     private List<Album> albumes;
     private List<Multimedia> multimedia;
+    private String busqueda;
+    private String agregarFoto;
+    private String imagenSeleccionada;
+    private String imagenesAgregar;
 
     public LoginController() {
         this.usuario = "";
@@ -63,6 +69,7 @@ public class LoginController {
         this.google = "";
         this.direccion = "";
         this.nick = "";
+        this.imagenperfil= "";
         this.privacidad = "publica";
         this.id = 0;
         this.albumes = new ArrayList<Album>();
@@ -70,6 +77,10 @@ public class LoginController {
         this.AlbumNombre = "";
         this.AlbumDesc = "";
         this.Albumpriv = "publica";
+        this.busqueda = "surf";
+        this.agregarFoto = "";
+        this.imagenSeleccionada = "";
+        this.imagenesAgregar = "";
     }
 
     public String login() {
@@ -90,6 +101,7 @@ public class LoginController {
             nick = user.getUsuario();
             clave = user.getPassword();
             privacidad = user.getPrivacidad();
+            imagenperfil = user.getImagenperfil();
             return "principal?faces-redirect=true";
         } else {
             mensaje = "Usuario o clave incorrecta";
@@ -113,6 +125,7 @@ public class LoginController {
         this.nick = "";
         this.privacidad = "";
         this.id = 0;
+        this.imagenperfil = "";
         return "index?faces-redirect=true";
     }
 
@@ -171,6 +184,7 @@ public class LoginController {
                                 user.setTwittter(twitter);
                                 user.setGoogle(google);
                                 user.setPrivacidad(privacidad);
+                                user.setImagenperfil(imagenperfil);
                                 Actualizado = Actusuario.ActualizarUsuario(user);
                                 if (Actualizado) {
                                     return "principal?faces-redirect=true";
@@ -226,6 +240,7 @@ public class LoginController {
                         user.setUsuario(nick);
                         user.setPassword(clave);
                         user.setEmail(email);
+                        user.setImagenperfil(imagenperfil);
                         registrado = addusuario.agregarUsuario(user);
                         if (registrado) {
                             return "principal?faces-redirect=true";
@@ -392,39 +407,103 @@ public class LoginController {
     public void setMultimedia(List<Multimedia> multimedia) {
         this.multimedia = multimedia;
     }
-    
-    
 
+    public String getBusqueda() {
+        return busqueda;
+    }
+
+    public void setBusqueda(String busqueda) {
+        this.busqueda = busqueda;
+    }
+
+    public String getAgregarFoto() {
+        return agregarFoto;
+    }
+
+    public void setAgregarFoto(String agregarFoto) {
+        this.agregarFoto = agregarFoto;
+    }
+
+    public String getImagenSeleccionada() {
+        return imagenSeleccionada;
+    }
+
+    public void setImagenSeleccionada(String imagenSeleccionada) {
+        this.imagenSeleccionada = imagenSeleccionada;
+    }
+
+    public String getImagenesAgregar() {
+        return imagenesAgregar;
+    }
+
+    public void setImagenesAgregar(String imagenesAgregar) {
+        this.imagenesAgregar = imagenesAgregar;
+    }
+
+    public String getImagenperfil() {
+        return imagenperfil;
+    }
+
+    public void setImagenperfil(String imagenperfil) {
+        this.imagenperfil = imagenperfil;
+    }
+
+    
+    
     public String insertaralbum() {
         if (AlbumNombre.equals("")) {
-            mensaje2 = "Nombre Obligatorio";
+            mensaje = "Nombre de Album Obligatorio";
             return "CrearAlbum?faces-redirect=true";
         } else {
-            boolean registrado = false;
-            AlbumController albumcontroller = new AlbumController();
-            Album album = new Album();
-            //album.setIdAlbum(4);
-            album.setNombre(AlbumNombre);
-            album.setDescripcion(AlbumDesc);
-            album.setIdUsuario(id);
-            album.setPrivacidad(Albumpriv);
-            registrado = albumcontroller.agregarAlbum(album);
-            if (registrado) {
-                AlbumNombre = "";
-                AlbumDesc = "";
-                Albumpriv = "publica";
-                mensaje2 = "";
-                return paginaAlbum();
-            } else {
+            if (imagenesAgregar.equals("")) {
+                mensaje = "Debe agregar al menos una imagen";
                 return "CrearAlbum?faces-redirect=true";
+            } else {
+                boolean registrado = false;
+                AlbumController albumcontroller = new AlbumController();
+                MultimediaController multimediacontroller = new MultimediaController();
+                Album album = new Album();
+                //album.setIdAlbum(4);
+                album.setNombre(AlbumNombre);
+                album.setDescripcion(AlbumDesc);
+                album.setIdUsuario(id);
+                album.setPrivacidad(Albumpriv);
+                registrado = albumcontroller.agregarAlbum(album);
+                if (registrado) {
+                    boolean registrado2 = false;
+                    int idAlbum = albumcontroller.ObtenerUltimoAlbum(id);
+                    StringTokenizer tokenizer = new StringTokenizer(imagenesAgregar, ";");
+                    int numberOfTokens = tokenizer.countTokens();
+                    String[] multimedias = new String[numberOfTokens];
+                    for (int i = 0; i < numberOfTokens; i++) {
+                        multimedias[i] = tokenizer.nextToken();
+                    }
+                    for (int i = 0; i< multimedias.length; i++){
+                        Multimedia multimedia = new Multimedia();
+                        multimedia.setNombre("");
+                        multimedia.setUrl(multimedias[i]);
+                        multimedia.setIdAlbum(idAlbum);
+                        registrado2 = multimediacontroller.agregarMultimedia(multimedia);
+                    }
+                    AlbumNombre = "";
+                    AlbumDesc = "";
+                    Albumpriv = "publica";
+                    mensaje2 = "";
+                    imagenesAgregar = "";
+                    return paginaAlbum();
+                } else {
+                    return "CrearAlbum?faces-redirect=true";
+                }
+
             }
+
         }
 
     }
 
     public String paginaAlbum() {
-        this.AlbumNombre =  ""; 
-        this.AlbumDesc = ""; 
+        this.AlbumNombre = "";
+        this.AlbumDesc = "";
         this.Albumpriv = "publica";
         AlbumController albumcontroller = new AlbumController();
         albumes = albumcontroller.consultarcatalogo(id);
@@ -436,16 +515,16 @@ public class LoginController {
         }
         return "album?faces-redirect=true";
     }
-    
+
     public String paginaFotosAlbum() {
         FacesContext fc = FacesContext.getCurrentInstance();
-        Map<String,String> params = 
-        fc.getExternalContext().getRequestParameterMap();
-        this.AlbumNombre =  params.get("AlbumNombre"); 
-        this.AlbumDesc = params.get("AlbumDesc"); 
-        int albumID = Integer.parseInt(params.get("idalbum")); 
-        AlbumController albumcontroller = new AlbumController();
-        multimedia = albumcontroller.consultarmultimedia(albumID);
+        Map<String, String> params =
+                fc.getExternalContext().getRequestParameterMap();
+        this.AlbumNombre = params.get("AlbumNombre");
+        this.AlbumDesc = params.get("AlbumDesc");
+        int albumID = Integer.parseInt(params.get("idalbum"));
+        MultimediaController multimediacontroller = new MultimediaController();
+        multimedia = multimediacontroller.consultarmultimedia(albumID);
 
         if (multimedia.isEmpty()) {
             mensaje = "albumes vacio1";
@@ -453,5 +532,21 @@ public class LoginController {
             mensaje = "albumes lleno1";
         }
         return "FotosAlbum?faces-redirect=true";
+    }
+
+    public String updateAgregarFoto() {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        Map<String, String> params =
+                fc.getExternalContext().getRequestParameterMap();
+        this.mensaje = params.get("menuItem");
+        mensaje = "hola mundo";
+        return "#";
+    }
+
+    public void imagenesParaAgregar() {
+
+        imagenesAgregar = imagenSeleccionada + ";" + imagenesAgregar;
+        imagenSeleccionada = "";
+        mensaje = "Imagen Agregada";
     }
 }

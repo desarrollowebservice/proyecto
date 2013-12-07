@@ -92,11 +92,46 @@ public class AlbumDAO {
                     con.close();
                 }
             } catch (SQLException ex) {
-                // Logger.getLogger(temaDAO.class.getName()).log(Level.SEVERE, null, ex);
+                 Logger.getLogger(AlbumDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
         return resultado;
 
+    }
+
+    public int ObtenerUltimoAlbum(int idUsuario) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int idAlbum = 0;
+
+        try {
+            //1.- obtengo la conexion
+            con = Conexion.getConnection();
+            //2.- obtengo la sentencia
+            ps = con.prepareStatement("select * from album_usuario where id_usuario=? order by id_album desc LIMIT 1");//
+            ps.setInt(1, idUsuario);
+            
+            rs = ps.executeQuery();
+            //4.- ejecuto
+
+            //5.- leo
+            while (rs.next()) {
+                idAlbum = rs.getInt("ID_ALBUM");                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AlbumDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AlbumDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        return idAlbum;
     }
 }

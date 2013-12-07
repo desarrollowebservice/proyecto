@@ -16,7 +16,7 @@ import negocio.Usuario;
 
 /**
  *
- * @author henry
+ * @author henry h
  */
 public class UsuarioDAO {
 
@@ -49,6 +49,7 @@ public class UsuarioDAO {
                 user.setTwittter(rs.getString("CTATWITER"));
                 user.setGoogle(rs.getString("CTAGOOGLE"));
                 user.setPrivacidad(rs.getString("PRIVACIDAD"));
+                user.setImagenperfil(rs.getString("IMAGENPERFIL"));
 
             }
 
@@ -88,8 +89,8 @@ public class UsuarioDAO {
         try {
             
             con = Conexion.getConnection();
-            ps = con.prepareStatement("INSERT INTO usuario(ID_USUARIO,USUARIO,PASSWD,NOMBRE,DIRECCION,EMAIL,CTAFACEBOOK,CTATWITER,CTAGOOGLE,PRIVACIDAD)"
-                    + " VALUES(nextval('usuarioseq'),?,?,?,?,?,?,?,?,?)");//10
+            ps = con.prepareStatement("INSERT INTO usuario(ID_USUARIO,USUARIO,PASSWD,NOMBRE,DIRECCION,EMAIL,CTAFACEBOOK,CTATWITER,CTAGOOGLE,PRIVACIDAD,IMAGENPERFIL)"
+                    + " VALUES(nextval('usuarioseq'),?,?,?,?,?,?,?,?,?,?)");//10
             
             ps.setString(1, usuario.getUsuario());
             ps.setString(2, usuario.getPassword());
@@ -100,6 +101,7 @@ public class UsuarioDAO {
             ps.setString(7, "");
             ps.setString(8, "");
             ps.setString(9, "publico");
+            ps.setString(10, usuario.getImagenperfil());
             ps.executeUpdate();
             resultado=true;
           //  con.commit();
@@ -133,7 +135,7 @@ public class UsuarioDAO {
         try {
             
             con = Conexion.getConnection();
-            ps = con.prepareStatement("UPDATE usuario SET USUARIO=?,PASSWD=?,NOMBRE=?,DIRECCION=?,EMAIL=?,CTAFACEBOOK=?,CTATWITER=?,CTAGOOGLE=?,PRIVACIDAD=? WHERE ID_USUARIO=?");//10
+            ps = con.prepareStatement("UPDATE usuario SET USUARIO=?,PASSWD=?,NOMBRE=?,DIRECCION=?,EMAIL=?,CTAFACEBOOK=?,CTATWITER=?,CTAGOOGLE=?,PRIVACIDAD=?,IMAGENPERFIL=? WHERE ID_USUARIO=?");//10
             
             ps.setString(1, usuario.getUsuario());
             ps.setString(2, usuario.getPassword());
@@ -144,7 +146,8 @@ public class UsuarioDAO {
             ps.setString(7, usuario.getTwittter());
             ps.setString(8, usuario.getGoogle());
             ps.setString(9, usuario.getPrivacidad());
-            ps.setInt(10, usuario.getIdUsuario());
+            ps.setString(10, usuario.getImagenperfil());
+            ps.setInt(11, usuario.getIdUsuario());
             ps.executeUpdate();
             resultado=true;
           //  con.commit();
