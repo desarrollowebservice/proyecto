@@ -23,14 +23,15 @@
                     <li><h4 style="color:#e67e22;">Face+</h4></li>
                     <li><a href="principal.xhtml">Principal</a></li>
                     <li><h:form>
+                            <h:commandLink class="nav navbar-nav" action="#{loginController.BusquedaSolicitud(loginController.id)}" style="text-decoration: none; color: #999999;margin: 15px 0;" value="Solicitud Amistad"></h:commandLink>
+                        </h:form></li>
+                    <li><h:form>
                             <h:commandLink class="nav navbar-nav" action="#{loginController.paginaAlbum}" style="text-decoration: none; color: #999999;margin: 15px 0;" value="Album"></h:commandLink>
                         </h:form></li>
                     <li><a href="#">Perfil</a></li>
                     <li><a href="ActualizarUsuario.xhtml">Configuracion Perfil</a></li>
-                    <li><input style="position:relative;top:4px" type="text" placeholder="Buscar Amigos" class="form-control" /></li>
-                    <li><button style="position:relative;top:4px;height:36px;" class="tn btn-hg btn-primary">
-                            Buscar
-                        </button></li>
+                     <li><h:form><h:inputText style="position:relative;top:4px" value="#{loginController.busquedaUsu}" class="form-control" /> 
+                            <h:commandButton  style="position:absolute;top:4px;left:200px;height:36px;" value="Buscar" action="#{loginController.BusquedaUsuario}"  class="tn btn-hg btn-primary"/>  </h:form></li>
                     <li><h:form><h:commandButton 
                                 style="position:relative;top:4px; left:400px;height:36px;" class="btn btn-danger"  value="Logout" action="#{loginController.logout}"/></h:form></li>
                 </ul>
@@ -70,19 +71,19 @@
 
 
                 </td>
-                <td style="width: 600px;position:absolute;top:52px;left:310px">
+                 <td style="width: 600px;position:absolute;top:52px;left:310px">
                     <h1 style="position:relative;top:10px; left:420px;height:36px;" class="h1">BIENVENIDO</h1>
                     <p class="h4">Hola, como estas ya es hora de compartir las mejores fotos las mejoras musica y de conocer 
-                        a tus futuros y nuevos amigos que esperas para unirte a la mejor experiencias gracias a Mutimageface
+                        a tus futuros y nuevos amigos que esperas para navegar y tener las mejores experiencias gracias a Face+
                     </p>
-                    <h2 class="h3">Hoy cumple años tus amigos:</h2>
-                    <ul>
-                        <li><a href="#">Henry calles</a></li> 
-                        <li><a href="#">Franklin Garcia</a></li> 
-                        <li><a href="#">Luis Medina</a></li> 
-                        <li><a href="#">Maria fernanda</a></li>
-                    </ul>
-                    <h2 style="color:#2980b9;">Conectate a tus apps favoritas y comparte un mundo!!<br/></h2>
+                    <h2 class="h3">Acepta tus solicitudes de amistad en Solicitud Amistad!</h2>
+                     
+                    <h2 style="color:#e67e22;" class="h3">Navega en un mundo de Posibilidades inimaginables comienza ya!</h2>
+                    <img src="images/imagenprincipal1.jpg" width="700" height="350" alt="inicio1" />
+                    <img src="images/imagenprincipal2.jpg" width="700" height="350" alt="inicio2" /><br/>
+                    <h:form><h:commandButton 
+                                style="width:700px;" class="btn btn-warning"  value="Ve tus Amistades Navega ya !" action="#{loginController.BusquedaAmistad(loginController.id)}"/></h:form>
+                    <h3 style="color:#2980b9;">Conectate a tus apps favoritas y comparte un mundo!!<br/></h3>
                     <img src="images/face.png" width="87" height="87" alt="logoface" />
                     <img src="images/Twitter.png" width="90" height="90" alt="logotwiter" />
                     <img src="images/insta.png" width="85" height="85" alt="logoinsta" />

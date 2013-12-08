@@ -56,6 +56,10 @@ public class LoginController {
     private String agregarFoto;
     private String imagenSeleccionada;
     private String imagenesAgregar;
+      private ArrayList<Usuario> listaUsuario;
+      private ArrayList<Usuario> listaSolicitud;
+      private ArrayList<Usuario> listaAmigos;
+      private String busquedaUsu;
 
     public LoginController() {
         this.usuario = "";
@@ -128,7 +132,58 @@ public class LoginController {
         this.imagenperfil = "";
         return "index?faces-redirect=true";
     }
+  
+     public String  BusquedaUsuario() {
+        // some validations may be done here...
+        UsuarioDAO busquedaUsu = new UsuarioDAO();
+     /*  if ( (this.busquedaUsu == null) || (this.busquedaUsu.isEmpty()) ) 
+       {  this.setBusquedaUsu("hen");}*/
+       
+       
+       this.listaUsuario  = busquedaUsu.BusquedaUsuario(this.busquedaUsu);
+        
+       this.busquedaUsu="";
+       return "BusquedaUsu?faces-redirect=true";
+    }
+     
+     
+           public String  BusquedaSolicitud(int id) {
+        // some validations may be done here...
+       // SolicitudAmistadDAO busquedaSolicitud = new SolicitudAmistadDAO();
+                UsuarioDAO busquedalis = new UsuarioDAO();
+     /*  if ( (this.busquedaUsu == null) || (this.busquedaUsu.isEmpty()) ) 
+       {  this.setBusquedaUsu("hen");}*/
+       
+       
+       //this.setListaSolicitud(busquedaSolicitud.BusquedaSolicitudes(24));
+        this.listaSolicitud=busquedalis.BusquedaSolicitudes(id);
+      
+       return "SolicitudAmistad?faces-redirect=true";
+    }
+           
+           
+        public String  BusquedaAmistad(int id) {
+        // some validations may be done here...
+      
+                UsuarioDAO busquedaamigo = new UsuarioDAO();
+    
+           this.listaAmigos=busquedaamigo.BusquedaAmigos(id);
+      
+       return "Amigos?faces-redirect=true";
+    }
 
+      public String  EliminarAmistad(int id,int id_amigo) {
+      boolean resultado;
+                UsuarioDAO Eliminaramigo = new UsuarioDAO();
+   
+       
+      
+        resultado=Eliminaramigo.EliminarAmigos(id, id_amigo);
+      
+       return "principal?faces-redirect=true";
+    }    
+        
+     
     public boolean isLoggedIn() {
 
         return usuario != null;
@@ -446,6 +501,38 @@ public class LoginController {
 
     public void setImagenperfil(String imagenperfil) {
         this.imagenperfil = imagenperfil;
+    }
+
+    public ArrayList<Usuario> getListaUsuario() {
+        return listaUsuario;
+    }
+
+    public void setListaUsuario(ArrayList<Usuario> listaUsuario) {
+        this.listaUsuario = listaUsuario;
+    }
+
+    public ArrayList<Usuario> getListaSolicitud() {
+        return listaSolicitud;
+    }
+
+    public void setListaSolicitud(ArrayList<Usuario> listaSolicitud) {
+        this.listaSolicitud = listaSolicitud;
+    }
+
+    public ArrayList<Usuario> getListaAmigos() {
+        return listaAmigos;
+    }
+
+    public void setListaAmigos(ArrayList<Usuario> listaAmigos) {
+        this.listaAmigos = listaAmigos;
+    }
+
+    public String getBusquedaUsu() {
+        return busquedaUsu;
+    }
+
+    public void setBusquedaUsu(String busquedaUsu) {
+        this.busquedaUsu = busquedaUsu;
     }
 
     

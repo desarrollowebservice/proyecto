@@ -4,7 +4,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
-        <title>Multimageface</title>
+        <title>FACEPLUS</title>
     </h:head>
      <script src="https://apis.google.com/js/client.js"></script>
     <script type="text/javascript">
@@ -127,13 +127,13 @@ function loginFinishedCallback(authResult) {
 		left: 630px;padding:0 0 0 7%;border-radius: 15px 15px 15px 15px;opacity: 0.9; ">
             <h:panelGrid columns="1">
             <h3>Nombre y Apellido:</h3>
-            <h:inputText disabled="true" id="nombre" size="15" value="#{loginController.nombreapellido}" class="form-control"/>
+            <h:inputText  id="nombre" size="15" value="#{loginController.nombreapellido}" class="form-control"/>
             <h3>Usuario:</h3>
             <h:inputText size="15" value="#{loginController.nick}" class="form-control"/>
             <h3>Clave:</h3>
             <h:inputSecret size="15" value="#{loginController.clave}" class="form-control"/>
             <h3>correo electronico:</h3>
-            <h:inputText disabled="true" id="email" size="15" value="#{loginController.email}" class="form-control"/>
+            <h:inputText  id="email" size="15" value="#{loginController.email}" class="form-control"/>
             <h:inputHidden id="imagen" value="#{loginController.imagenperfil}"/>
             <h:outputText value=""></h:outputText>
             <h:outputText value=""></h:outputText>

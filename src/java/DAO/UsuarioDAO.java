@@ -20,6 +20,199 @@ import negocio.Usuario;
  */
 public class UsuarioDAO {
 
+        
+    public ArrayList<Usuario> BusquedaUsuario(String palabra) {
+
+        String sql;
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+     
+       ArrayList<Usuario> listaUsuario = new ArrayList<Usuario>();
+
+        try {
+   if ( (palabra == null) || (palabra.isEmpty()) ) {
+    // cadena está vacía
+       con = Conexion.getConnection();
+            ps = con.prepareStatement("select * from Usuario ");
+            //ps.setString(1, usuario);
+            
+            rs = ps.executeQuery();
+}
+   else {    con = Conexion.getConnection();
+            ps = con.prepareStatement("select * from Usuario where nombre LIKE '%"+palabra+"%'");
+           // ps.setString(1,palabra);
+            
+            rs = ps.executeQuery();
+   }
+            while (rs.next()) {
+
+            Usuario user = new Usuario(rs.getInt("ID_USUARIO"), rs.getString("USUARIO"), rs.getString("PASSWD"), rs.getString("NOMBRE"), "",rs.getString("DIRECCION"),rs.getString("EMAIL"),rs.getString("CTAFACEBOOK"), rs.getString("CTATWITER"), rs.getString("CTAGOOGLE"),rs.getString("PRIVACIDAD"),rs.getString("IMAGENPERFIL"));
+            listaUsuario.add(user);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+               
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        return listaUsuario;
+    }
+    
+    
+        public ArrayList<Usuario> BusquedaSolicitudes(int id) {
+
+        String sql;
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+     
+       ArrayList<Usuario> listaUsuario = new ArrayList<Usuario>();
+
+        try {
+            con = Conexion.getConnection();
+            ps = con.prepareStatement("select ID_USUARIO,USUARIO,PASSWD,NOMBRE,DIRECCION,EMAIL,CTAFACEBOOK,CTATWITER,CTAGOOGLE,PRIVACIDAD,IMAGENPERFIL from usuario u,solicitud_amigo s where s.id_solicitante = u.id_usuario and id_solicitado=? and s.status_solicitado=0");
+          ps.setInt(1,id);
+            
+            rs = ps.executeQuery();
+
+   
+            while (rs.next()) {
+
+            Usuario user = new Usuario(rs.getInt("ID_USUARIO"), rs.getString("USUARIO"), rs.getString("PASSWD"), rs.getString("NOMBRE"), "",rs.getString("DIRECCION"),rs.getString("EMAIL"),rs.getString("CTAFACEBOOK"), rs.getString("CTATWITER"), rs.getString("CTAGOOGLE"),rs.getString("PRIVACIDAD"),rs.getString("IMAGENPERFIL"));
+            listaUsuario.add(user);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(SolicitudAmistadDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+               
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(SolicitudAmistadDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        return listaUsuario;
+    }
+        
+        
+    public ArrayList<Usuario> BusquedaAmigos(int id) {
+
+        String sql;
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+     
+       ArrayList<Usuario> listaUsuario = new ArrayList<Usuario>();
+
+        try {
+            con = Conexion.getConnection();
+            ps = con.prepareStatement("select u.ID_USUARIO,USUARIO,PASSWD,NOMBRE,DIRECCION,EMAIL,CTAFACEBOOK,CTATWITER,CTAGOOGLE,PRIVACIDAD,IMAGENPERFIL from usuario u,usuario_amigo a where a.id_amigo = u.id_usuario and a.id_usuario=?");
+          ps.setInt(1,id);
+            
+            rs = ps.executeQuery();
+
+   
+            while (rs.next()) {
+
+            Usuario user = new Usuario(rs.getInt("ID_USUARIO"), rs.getString("USUARIO"), rs.getString("PASSWD"), rs.getString("NOMBRE"), "",rs.getString("DIRECCION"),rs.getString("EMAIL"),rs.getString("CTAFACEBOOK"), rs.getString("CTATWITER"), rs.getString("CTAGOOGLE"),rs.getString("PRIVACIDAD"),rs.getString("IMAGENPERFIL"));
+            listaUsuario.add(user);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(SolicitudAmistadDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+               
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(SolicitudAmistadDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        return listaUsuario;
+    }
+    
+    public boolean EliminarAmigos(int id,int id_amigo) {
+
+        String sql;
+        Connection con = null;
+        Connection con2 = null;
+        Connection con3 = null;
+         Connection con4 = null;
+        PreparedStatement ps = null;
+         PreparedStatement ps2 = null;
+          PreparedStatement ps3 = null;
+           PreparedStatement ps4 = null;
+     boolean resultado;
+      
+
+        try {
+            
+            //borramos a nuestro amigo en nuestra lista
+            con = Conexion.getConnection();
+            ps = con.prepareStatement(" DELETE from usuario_amigo a where a.id_usuario=?  and a.id_amigo=?");
+          ps.setInt(1,id);
+          ps.setInt(2,id_amigo);   
+            ps.executeUpdate();
+        
+
+           //borramos a nosotros en la lista de nuestro amigo
+            con2 = Conexion.getConnection();
+            ps2 = con2.prepareStatement(" DELETE from usuario_amigo a where a.id_usuario=?  and a.id_amigo=?");
+          ps2.setInt(2,id);  
+          ps2.setInt(1,id_amigo);  
+            ps2.executeUpdate();
+            
+            //borramos la solicitud de nuestro amigo 
+             con3 = Conexion.getConnection();
+            ps3 = con3.prepareStatement("delete from solicitud_amigo where id_solicitado=? and id_solicitante=?");
+          ps3.setInt(2,id);
+          ps3.setInt(1,id_amigo);  
+            ps3.executeUpdate();
+
+            //si es de manera contraria tambien borramos la solicitud
+             con3 = Conexion.getConnection();
+            ps3 = con3.prepareStatement("delete from solicitud_amigo where id_solicitado=? and id_solicitante=?");
+          ps3.setInt(1,id);
+          ps3.setInt(2,id_amigo);  
+            ps3.executeUpdate();
+            
+            resultado=true;
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            resultado=false;
+        } finally {
+            try {
+               
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        return resultado;
+    }
+        
+    
+    
+    
     public Usuario conseguirUsuario(String usuario, String clave) {
 
         String sql;

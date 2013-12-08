@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <head>
+        <title>FACEPLUS</title>
+        <meta http-equiv="Content-Language" content="English" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" type="text/css" href="bootstrap.css" media="screen" />
+
+    </head>
+    <h:body>
+
+        <div id="wrap">
+
+    <div class="navbar navbar-inverse">
+                <ul class="nav navbar-nav">
+                    <li><h4 style="color:#e67e22;">Face+</h4></li>
+                    <li><a href="principal.xhtml">Principal</a></li>
+                    <li><h:form>
+                            <h:commandLink class="nav navbar-nav" action="#{loginController.BusquedaSolicitud(loginController.id)}" style="text-decoration: none; color: #999999;margin: 15px 0;" value="Solicitud Amistad"></h:commandLink>
+                        </h:form></li>
+                    <li><h:form>
+                            <h:commandLink class="nav navbar-nav" action="#{loginController.paginaAlbum}" style="text-decoration: none; color: #999999;margin: 15px 0;" value="Album"></h:commandLink>
+                        </h:form></li>
+                    <li><a href="#">Perfil</a></li>
+                    <li><a href="ActualizarUsuario.xhtml">Configuracion Perfil</a></li>
+                    <li><h:form><h:inputText style="position:relative;top:4px" value="#{loginController.busquedaUsu}" class="form-control" /> 
+                            <h:commandButton  style="position:absolute;top:4px;left:200px;height:36px;" value="Buscar" action="#{loginController.BusquedaUsuario}"  class="tn btn-hg btn-primary"/>  </h:form></li>
+                  
+                    <li><h:form><h:commandButton 
+                                style="position:relative;top:4px; left:400px;height:36px;" class="btn btn-danger"  value="Logout" action="#{loginController.logout}"/></h:form></li>
+                </ul>
+            </div>
+
+            <h:outputText value="#{loginController.nick}"/>
+
+            <table style="position:absolute;top:52px;" >
+                <td style="background-color:#bdc3c7; width: 300px;heigth:800px;" class="demo-sidebar " >
+                    <h:graphicImage style="position:relative;top:2px; left:60px;" value="#{loginController.imagenperfil}"  width="150" height="150"/>
+
+
+
+                    <h2 class="h3">Hola tus datos son:</h2>
+
+                    <h:form>
+                        <ul>
+                            <li><h:outputText value="#{loginController.nombreapellido}"/></li>
+                            <li><h:outputText value="#{loginController.email}"/></li>
+                            <c:if test="${!empty loginController.direccion}">
+                                <li><h:outputText value="#{loginController.direccion}"/></li>
+                            </c:if>
+                            <c:if test="${!empty loginController.facebook}">
+                                <li><h:outputLink value="#{loginController.facebook}" target="_blank">FACEBOOK</h:outputLink></li>
+                            </c:if>
+                            <c:if test="${!empty loginController.google}">
+                                <li><h:outputLink value="#{loginController.google}" target="_blank">GOOGLE+</h:outputLink></li>
+                            </c:if>
+                            <c:if test="${!empty loginController.twitter}">
+                                <li><h:outputLink value="#{loginController.twitter}" target="_blank">TWITTER</h:outputLink></li>
+                            </c:if>
+                            
+                            
+                        </ul>
+                    </h:form>
+
+
+
+                </td>
+                <td style="width: 600px;position:absolute;top:52px;left:310px">
+                    
+                      <h2 class="h3" style="color:#2980b9;">Navega con tus Amigos!</h2>
+<h:dataTable value="#{loginController.listaAmigos}" var="lis">
+        <h:column>
+              
+              <h:graphicImage value="#{lis.imagenperfil}" width="120" height="120" />
+            </h:column>   
+             <h:column>
+                 <f:facet name="header">
+                <h:outputText value="Informacion"/>
+              </f:facet>
+             <h:outputText value="#{lis.usuario}"/>
+            </h:column>
+            <h:column>
+              <h:outputText value="#{lis.nombre}"/>
+            </h:column>
+             <h:column>
+              <h:outputText value="#{lis.email}"/>
+            </h:column>
+            <h:column>
+             <h:outputText value="#{lis.direccion}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                <h:outputText value="Cuentas"/>
+              </f:facet>
+                <h:outputText value="#{lis.facebook}"/>
+            </h:column>
+            <h:column>
+             <h:outputText value="#{lis.twittter}"/>
+            </h:column>
+            <h:column>
+             <h:outputText value="#{lis.google}"/>
+            </h:column>
+              <h:column>
+                  <f:facet name="header">
+                <h:outputText value="Solicitud"/>
+              </f:facet>
+                  <h:form>
+                  <h:commandButton  class="btn btn-success" action="#{solicitudAmistadController.EnviarSolicitud(loginController.id, lis.idUsuario)}" value="Navegar" />
+                 
+                  </h:form>
+              </h:column>
+                <h:column>
+                  
+                  <h:form>
+                      <h:commandButton  class="btn btn-danger" action="#{loginController.EliminarAmistad(loginController.id, lis.idUsuario)}" value="Eliminar" />
+                  <h:outputText value="#{solicitudAmistadController.mensaje3}"/>
+                  </h:form>
+              </h:column>    
+    
+          </h:dataTable>
+
+  
+
+
+
+                </td>
+
+            </table>
+
+
+
+
+
+
+
+
+            <!--<img style="position:absolute; top: 120px; left: 630px;" src="images/usuario.png" width="100" height="100" alt="usuario" /><br />
+            -->
+
+
+
+
+
+
+
+
+        </div>
+
+    </h:body>
+    <!-- <style>body{background-image:url("images/fondo2.png");}</style> -->
+
+</html>
+
+
+
+
+
